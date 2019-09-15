@@ -15,29 +15,23 @@ namespace line
 {
     public partial class drawarea : Form
     {
-        bool Clicked = false;
+        bool Clicked = false; //нажатие ПКМ
         int NumOfLine = 0; //обработка массива 
 
         bool p1 = false; //работа с краями или центром линии
         bool p2 = false;
         bool p3 = false;
         
-        float dX = 0;
+        float dX = 0; //дельта переменные
         float dY = 0;
         float xm = 0;
         float ym = 0;
 
-        Lines ln;//new Lines(100, 100, 150, 150)
-        //ln_mas.Append(new Lines(100, 100, 150, 150));
-        //ln_mas.Append(new Lines(80, 80, 50, 50));
-        //ln_mas.Append(new Lines(200, 200, 400, 400));
+        Lines ln; //для удобства оформления кода
 
+        List<Lines> ln_mas = new List<Lines>(); //словарь координат линий
+        Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
 
-
-        List<Lines> ln_mas = new List<Lines>();
-       
-
-        Pen pen = new Pen(Color.Black, 3); //стандарт рисовки линии (цвет, размер)
         SolidBrush redBrush = new SolidBrush(Color.Red); //станд. рисовки закрашенной окружности (цвет)
 
         public drawarea()
@@ -60,13 +54,9 @@ namespace line
         {
             for(int i=0;i<ln_mas.Count;i++)
             {
-                if( (e.X >= ((ln_mas[i].X2 + ln_mas[i].X1) / 2) - (ln_mas[i].X2 - ln_mas[i].X1) / 2) 
-                    &&
-                    e.X <= ((ln_mas[i].X2 + ln_mas[i].X1) / 2) + (ln_mas[i].X2 - ln_mas[i].X1) / 2) //+- от центра линии по Х
+                if((e.X >= ln_mas[i].X1 && e.X <= ln_mas[i].X2) || (e.X >= ln_mas[i].X2-10 && e.X <= ln_mas[i].X1+10)) //+- от  Х
                 {
-                    if ((e.Y >= ((ln_mas[i].Y2 + ln_mas[i].Y1) / 2) - (ln_mas[i].Y2 - ln_mas[i].Y1) / 2)//+- от центра линии по Y
-                   &&
-                   e.Y <= ((ln_mas[i].Y2 + ln_mas[i].Y1) / 2) + (ln_mas[i].Y2 - ln_mas[i].Y1) / 2)
+                    if ((e.Y >= ln_mas[i].Y1 && e.Y <= ln_mas[i].Y2) || (e.Y >= ln_mas[i].Y2-10 && e.Y <= ln_mas[i].Y1+10))  //+- от  Y
                     {
                         NumOfLine = i;
                         return i;
@@ -76,47 +66,56 @@ namespace line
             return -1;
         }
 
+        public void BacktoBlack()
+        {
+            for (int i = 0; i < ln_mas.Count; i++)
+            {
+                ln_mas[i].pen = new Pen(Color.Black, 3);
+            }
+        }
+
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
             if (Check_func(e) == -1)//нашло ли линию
             {
-
+                BacktoBlack();
             }
             else
             {
+                BacktoBlack();
                 ln = ln_mas[NumOfLine];
-                if ((e.X >= ln.X1 - 8) && (e.X <= ln.X1 + 8)) //first point
+                if ((e.X >= ln.X1 - 10) && (e.X <= ln.X1 + 10)) //first point
                 {
-                    if ((e.Y >= ln.Y1 - 8) && (e.Y <= ln.Y1 + 8))
+                    if ((e.Y >= ln.Y1 - 10) && (e.Y <= ln.Y1 + 10))
                     {
                         Clicked = true;
                         p1 = true;
-                        pen = new Pen(Color.Green, 3);
+                        ln_mas[NumOfLine].pen = GR;
                         dX = e.X - ln.X1;
                         dY = e.Y - ln.Y1;
                     }
 
                 }
 
-                if ((e.X >= ln.X2 - 8) && (e.X <= ln.X2 + 8)) //second point
+                if ((e.X >= ln.X2 -10) && (e.X <= ln.X2 + 10)) //second point
                 {
-                    if ((e.Y >= ln.Y2 - 8) && (e.Y <= ln.Y2 + 8))
+                    if ((e.Y >= ln.Y2 - 10) && (e.Y <= ln.Y2 + 10))
                     {
                         Clicked = true;
                         p2 = true;
-                        pen = new Pen(Color.Green, 3);
+                        ln_mas[NumOfLine].pen = GR;
                         dX = e.X - ln.X2;
                         dY = e.Y - ln.Y2;
                     }
                 }
 
-                if (e.X >= ((ln.X2 + ln.X1) / 2) - 8 && e.X <= ((ln.X2 + ln.X1) / 2) + 8)//middle point
+                if (e.X >= ((ln.X2 + ln.X1) / 2) - 10 && e.X <= ((ln.X2 + ln.X1) / 2) + 10)//middle point
                 {
-                    if (e.Y >= ((ln.Y2 + ln.Y1) / 2) - 8 && e.Y <= ((ln.Y2 + ln.Y1) / 2) + 8)
+                    if (e.Y >= ((ln.Y2 + ln.Y1) / 2) - 10 && e.Y <= ((ln.Y2 + ln.Y1) / 2) + 10)
                     {
                         Clicked = true;
                         p3 = true;
-                        pen = new Pen(Color.Green, 3);
+                        ln_mas[NumOfLine].pen = GR;
                         xm = (ln.X2 - ln.X1) / 2;
                         ym = (ln.Y2 - ln.Y1) / 2;
                     }
@@ -129,7 +128,7 @@ namespace line
         {
             for (int i = 0; i < ln_mas.Count; i++)
             {
-                e.Graphics.DrawLine(pen, ln_mas[i].X1, ln_mas[i].Y1, ln_mas[i].X2, ln_mas[i].Y2);
+                e.Graphics.DrawLine(ln_mas[i].pen, ln_mas[i].X1, ln_mas[i].Y1, ln_mas[i].X2, ln_mas[i].Y2);
                 e.Graphics.FillEllipse(redBrush, ln_mas[i].X1, ln_mas[i].Y1, 7, 7);
                 e.Graphics.FillEllipse(redBrush, (ln_mas[i].X2 + ln_mas[i].X1) / 2, (ln_mas[i].Y2 + ln_mas[i].Y1) / 2, 7, 7);
                 e.Graphics.FillEllipse(redBrush, ln_mas[i].X2, ln_mas[i].Y2, 7, 7);
@@ -167,7 +166,7 @@ namespace line
             p1 = false;
             p2 = false;
             p3 = false;
-            pen = new Pen(Color.Black, 3);
+           // ln_mas[NumOfLine].pen = new Pen(Color.Black, 3);
             Canvas.Invalidate();
         }
 
@@ -177,6 +176,18 @@ namespace line
             ln_mas.Add(new Lines(80, 80, 50, 50));
             ln_mas.Add(new Lines(200, 200, 400, 400));
             Canvas.Invalidate();
+        }
+
+        private void Del_Line_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < ln_mas.Count; i++)
+            {
+               if(ln_mas[i].pen == GR)
+                {
+                    ln_mas.RemoveAt(i);
+                    Canvas.Invalidate();
+                }
+            }
         }
     }
 }

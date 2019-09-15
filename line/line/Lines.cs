@@ -17,10 +17,13 @@ namespace line
         private float y1;
         private float x2;
         private float y2;
+        public Pen pen = new Pen(Color.Black, 3);
+
 
         public Lines()
         {
-            x1 = y1 = x2 = y2 = 0;
+           x1 = y1 = x2 = y2 = 0;
+           //pen = new Pen(Color.Black, 3);
         }
         public Lines(float X,float Y, float XX, float YY)
         {
