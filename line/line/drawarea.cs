@@ -126,6 +126,10 @@ namespace line
 
         private void Canvas_Paint(object sender, PaintEventArgs e) //отрисовка линий
         {
+            e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 10, 480, new StringFormat());
+            e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 480, 10, new StringFormat());
+            e.Graphics.DrawLine(new Pen(Color.Black, 8), 0,0,0, 500);
+            e.Graphics.DrawLine(new Pen(Color.Black, 8), 0, 0, 500, 0);
             for (int i = 0; i < ln_mas.Count; i++)
             {
                 e.Graphics.DrawLine(ln_mas[i].pen, ln_mas[i].X1, ln_mas[i].Y1, ln_mas[i].X2, ln_mas[i].Y2);

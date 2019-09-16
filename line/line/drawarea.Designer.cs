@@ -36,11 +36,15 @@
             // 
             // Canvas
             // 
+            this.Canvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Canvas.BackColor = System.Drawing.Color.White;
             this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Canvas.Location = new System.Drawing.Point(3, 4);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(1068, 639);
+            this.Canvas.Size = new System.Drawing.Size(1090, 641);
+            this.Canvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.Canvas.TabIndex = 0;
             this.Canvas.TabStop = false;
             this.Canvas.Click += new System.EventHandler(this.PictureBox1_Click);
@@ -51,9 +55,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1096, 42);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.AutoSize = true;
+            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button1.Location = new System.Drawing.Point(1135, 25);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 34);
+            this.button1.Size = new System.Drawing.Size(102, 23);
             this.button1.TabIndex = 1;
             this.button1.Text = "Добавить линию";
             this.button1.UseVisualStyleBackColor = true;
@@ -61,9 +69,14 @@
             // 
             // Del_Line
             // 
-            this.Del_Line.Location = new System.Drawing.Point(1096, 98);
+            this.Del_Line.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Del_Line.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Del_Line.Location = new System.Drawing.Point(1135, 79);
+            this.Del_Line.MaximumSize = new System.Drawing.Size(102, 23);
+            this.Del_Line.MinimumSize = new System.Drawing.Size(102, 23);
             this.Del_Line.Name = "Del_Line";
-            this.Del_Line.Size = new System.Drawing.Size(144, 35);
+            this.Del_Line.Size = new System.Drawing.Size(102, 23);
             this.Del_Line.TabIndex = 2;
             this.Del_Line.Text = "Удалить линию";
             this.Del_Line.UseVisualStyleBackColor = true;
@@ -82,6 +95,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
