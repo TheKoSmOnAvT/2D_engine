@@ -15,23 +15,17 @@ namespace line
 {
     public partial class drawarea : Form
     {
+        Random rnd = new Random();
         bool Clicked = false; //нажатие ПКМ
         int NumOfLine = 0; //обработка массива 
-
-        bool p1 = false; //работа с краями или центром линии
-        bool p2 = false;
-        bool p3 = false;
-        
         float dX = 0; //дельта переменные
         float dY = 0;
         float xm = 0;
         float ym = 0;
 
         Lines ln; //для удобства оформления кода
-
         List<Lines> ln_mas = new List<Lines>(); //словарь координат линий
         Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
-
         SolidBrush redBrush = new SolidBrush(Color.Red); //станд. рисовки закрашенной окружности (цвет)
 
         public drawarea()
@@ -89,7 +83,7 @@ namespace line
                     if ((e.Y >= ln.Y1 - 10) && (e.Y <= ln.Y1 + 10))
                     {
                         Clicked = true;
-                        p1 = true;
+                        ln_mas[NumOfLine].p1 = true;
                         ln_mas[NumOfLine].pen = GR;
                         dX = e.X - ln.X1;
                         dY = e.Y - ln.Y1;
@@ -102,7 +96,7 @@ namespace line
                     if ((e.Y >= ln.Y2 - 10) && (e.Y <= ln.Y2 + 10))
                     {
                         Clicked = true;
-                        p2 = true;
+                        ln_mas[NumOfLine].p2 = true;
                         ln_mas[NumOfLine].pen = GR;
                         dX = e.X - ln.X2;
                         dY = e.Y - ln.Y2;
@@ -114,7 +108,7 @@ namespace line
                     if (e.Y >= ((ln.Y2 + ln.Y1) / 2) - 10 && e.Y <= ((ln.Y2 + ln.Y1) / 2) + 10)
                     {
                         Clicked = true;
-                        p3 = true;
+                        ln_mas[NumOfLine].p3 = true;
                         ln_mas[NumOfLine].pen = GR;
                         xm = (ln.X2 - ln.X1) / 2;
                         ym = (ln.Y2 - ln.Y1) / 2;
@@ -126,6 +120,7 @@ namespace line
 
         private void Canvas_Paint(object sender, PaintEventArgs e) //отрисовка линий
         {
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 10, 480, new StringFormat());
             e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 480, 10, new StringFormat());
             e.Graphics.DrawLine(new Pen(Color.Black, 8), 0,0,0, 500);
@@ -141,19 +136,19 @@ namespace line
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e) //обновление координат линий
         {
-            if (Clicked && p1) 
+            if (Clicked && ln_mas[NumOfLine].p1) 
             {
                 ln.X1 = e.X - dX;
                 ln.Y1 = e.Y - dY;
                 Canvas.Invalidate();
             }
-            if (Clicked && p2)
+            if (Clicked && ln_mas[NumOfLine].p2)
             {
                 ln.X2 = e.X - dX;
                 ln.Y2 = e.Y - dY;
                 Canvas.Invalidate();
             }
-            if (Clicked && p3)
+            if (Clicked && ln_mas[NumOfLine].p3)
             {
                 ln.X1 = e.X - xm;
                 ln.Y1 = e.Y - ym;
@@ -167,18 +162,13 @@ namespace line
         private void Canvas_MouseUp(object sender, MouseEventArgs e) //сброс временных переменных при окончании действия мышью
         {
             Clicked = false;
-            p1 = false;
-            p2 = false;
-            p3 = false;
-           // ln_mas[NumOfLine].pen = new Pen(Color.Black, 3);
+            ln_mas[NumOfLine].DownBool();//линия
             Canvas.Invalidate();
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            ln_mas.Add(new Lines(100, 100, 150, 150));
-            ln_mas.Add(new Lines(80, 80, 50, 50));
-            ln_mas.Add(new Lines(200, 200, 400, 400));
+            ln_mas.Add(new Lines(rnd.Next(50, 300), rnd.Next(80, 350), rnd.Next(50, 400), rnd.Next(10, 200)));
             Canvas.Invalidate();
         }
 

@@ -8,4 +8,3 @@ D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.csproj.CoreCompileInpu
 D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.exe
 D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.pdb
 D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.drawarea.resources
-D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.Menu.resources
