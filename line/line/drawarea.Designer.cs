@@ -31,6 +31,7 @@
             this.Canvas = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.Del_Line = new System.Windows.Forms.Button();
+            this.LineofEq = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,17 +83,34 @@
             this.Del_Line.UseVisualStyleBackColor = true;
             this.Del_Line.Click += new System.EventHandler(this.Del_Line_Click);
             // 
+            // LineofEq
+            // 
+            this.LineofEq.AcceptsTab = true;
+            this.LineofEq.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LineofEq.Location = new System.Drawing.Point(1117, 125);
+            this.LineofEq.Name = "LineofEq";
+            this.LineofEq.ReadOnly = true;
+            this.LineofEq.Size = new System.Drawing.Size(137, 20);
+            this.LineofEq.TabIndex = 3;
+            this.LineofEq.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
+            // 
             // drawarea
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1266, 641);
+            this.Controls.Add(this.LineofEq);
             this.Controls.Add(this.Del_Line);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Canvas);
+            this.KeyPreview = true;
+            this.MinimumSize = new System.Drawing.Size(1282, 680);
             this.Name = "drawarea";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Drawarea_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Drawarea_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -104,6 +122,7 @@
         private System.Windows.Forms.PictureBox Canvas;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button Del_Line;
+        protected internal System.Windows.Forms.TextBox LineofEq;
     }
 }
 

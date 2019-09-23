@@ -17,13 +17,10 @@ namespace line
     {
         Random rnd = new Random();
         bool Clicked = false; //нажатие ПКМ
-        int NumOfLine = 0; //обработка массива 
-        float dX = 0; //дельта переменные
-        float dY = 0;
-        float xm = 0;
-        float ym = 0;
+        bool ctr = false; //нажат ctrl
+        int NumOfLine = -1; //обработка массива 
 
-        Lines ln; //для удобства оформления кода
+           
         List<Lines> ln_mas = new List<Lines>(); //словарь координат линий
         Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
         SolidBrush redBrush = new SolidBrush(Color.Red); //станд. рисовки закрашенной окружности (цвет)
@@ -70,48 +67,23 @@ namespace line
 
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
-            if (Check_func(e) == -1)//нашло ли линию
+            if (ctr == true && Check_func(e) != -1)
             {
-                BacktoBlack();
+                    ln_mas[NumOfLine].Mouse_Down(e, GR);
             }
             else
             {
-                BacktoBlack();
-                ln = ln_mas[NumOfLine];
-                if ((e.X >= ln.X1 - 10) && (e.X <= ln.X1 + 10)) //first point
+                if (Check_func(e) == -1)//нашло ли линию
                 {
-                    if ((e.Y >= ln.Y1 - 10) && (e.Y <= ln.Y1 + 10))
-                    {
-                        Clicked = true;
-                        ln_mas[NumOfLine].p1 = true;
-                        ln_mas[NumOfLine].pen = GR;
-                        dX = e.X - ln.X1;
-                        dY = e.Y - ln.Y1;
-                    }
-
+                    BacktoBlack();
                 }
-
-                if ((e.X >= ln.X2 -10) && (e.X <= ln.X2 + 10)) //second point
+                else
                 {
-                    if ((e.Y >= ln.Y2 - 10) && (e.Y <= ln.Y2 + 10))
+                    BacktoBlack();
+                    if (ln_mas[NumOfLine].Mouse_Down(e, GR))
                     {
                         Clicked = true;
-                        ln_mas[NumOfLine].p2 = true;
-                        ln_mas[NumOfLine].pen = GR;
-                        dX = e.X - ln.X2;
-                        dY = e.Y - ln.Y2;
-                    }
-                }
-
-                if (e.X >= ((ln.X2 + ln.X1) / 2) - 10 && e.X <= ((ln.X2 + ln.X1) / 2) + 10)//middle point
-                {
-                    if (e.Y >= ((ln.Y2 + ln.Y1) / 2) - 10 && e.Y <= ((ln.Y2 + ln.Y1) / 2) + 10)
-                    {
-                        Clicked = true;
-                        ln_mas[NumOfLine].p3 = true;
-                        ln_mas[NumOfLine].pen = GR;
-                        xm = (ln.X2 - ln.X1) / 2;
-                        ym = (ln.Y2 - ln.Y1) / 2;
+                        LineofEq.Text = ln_mas[NumOfLine].equation();
                     }
                 }
             }
@@ -125,6 +97,15 @@ namespace line
             e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 480, 10, new StringFormat());
             e.Graphics.DrawLine(new Pen(Color.Black, 8), 0,0,0, 500);
             e.Graphics.DrawLine(new Pen(Color.Black, 8), 0, 0, 500, 0);
+
+            e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 100, 10, 100);
+            e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 200, 10, 200);
+            e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 300, 10, 300);
+
+            e.Graphics.DrawLine(new Pen(Color.Black, 5), 100, 0, 100, 10);
+            e.Graphics.DrawLine(new Pen(Color.Black, 5), 200, 0, 200, 10);
+            e.Graphics.DrawLine(new Pen(Color.Black, 5), 300, 0, 300, 10);
+
             for (int i = 0; i < ln_mas.Count; i++)
             {
                 e.Graphics.DrawLine(ln_mas[i].pen, ln_mas[i].X1, ln_mas[i].Y1, ln_mas[i].X2, ln_mas[i].Y2);
@@ -136,33 +117,22 @@ namespace line
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e) //обновление координат линий
         {
-            if (Clicked && ln_mas[NumOfLine].p1) 
+            if (Clicked && (ln_mas[NumOfLine].p1 || ln_mas[NumOfLine].p2 || ln_mas[NumOfLine].p3)) 
             {
-                ln.X1 = e.X - dX;
-                ln.Y1 = e.Y - dY;
+                ln_mas[NumOfLine].Mouse_Move(e);
+                LineofEq.Text = ln_mas[NumOfLine].equation();
                 Canvas.Invalidate();
             }
-            if (Clicked && ln_mas[NumOfLine].p2)
-            {
-                ln.X2 = e.X - dX;
-                ln.Y2 = e.Y - dY;
-                Canvas.Invalidate();
-            }
-            if (Clicked && ln_mas[NumOfLine].p3)
-            {
-                ln.X1 = e.X - xm;
-                ln.Y1 = e.Y - ym;
-                              
-                ln.X2 = e.X + xm;
-                ln.Y2 = e.Y + ym;
-                Canvas.Invalidate();
-            }
+            
         }
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e) //сброс временных переменных при окончании действия мышью
         {
             Clicked = false;
-            ln_mas[NumOfLine].DownBool();//линия
+            if (NumOfLine != -1)
+            {
+                ln_mas[NumOfLine].DownBool();//линия
+            }
             Canvas.Invalidate();
         }
 
@@ -172,16 +142,64 @@ namespace line
             Canvas.Invalidate();
         }
 
-        private void Del_Line_Click(object sender, EventArgs e)
+
+        public Stack<int> check_colore() //проверка наличия фокуса
         {
+            Stack<int> nums = new Stack<int>();
             for (int i = 0; i < ln_mas.Count; i++)
             {
-               if(ln_mas[i].pen == GR)
+                if (ln_mas[i].pen == GR)
                 {
-                    ln_mas.RemoveAt(i);
-                    Canvas.Invalidate();
+                    nums.Push(i);
                 }
             }
+            return nums;
+        }
+        public void del_lines() //удаление линий
+        {
+            Stack<int> nums = check_colore();
+            foreach(int i in nums)
+            {
+                ln_mas.RemoveAt(i);
+                Canvas.Invalidate();
+            }
+            NumOfLine = -1;
+            //while (check_colore())
+            //{
+            //    NumOfLine = -1;
+            //    for (int i = 0; i < ln_mas.Count; i++)
+            //    {
+            //        if (ln_mas[i].pen == GR)
+            //        {
+            //            ln_mas.RemoveAt(i);
+            //            Canvas.Invalidate();
+            //            i = 0;
+            //        }
+            //    }
+            //}
+        }
+
+        private void Del_Line_Click(object sender, EventArgs e)
+        {
+            del_lines();
+        }
+
+        private void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Drawarea_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control == true)
+            {
+                ctr = true;
+            }
+        }
+
+        private void Drawarea_KeyUp(object sender, KeyEventArgs e)
+        {
+                ctr = false;
         }
     }
 }
