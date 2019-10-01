@@ -77,12 +77,13 @@ namespace line
 
         }
 
+
         public string equation()
         {
             string str = null;
-            double b = Math.Round(Math.Abs(x1 - x2) / Math.Abs(x1 * y2 - y1 * x2),3)*1000;
-            double a = Math.Round(Math.Abs(y1 - y2) / Math.Abs(x1 * y2 - y1 * x2),3)*1000;
-            str = a.ToString() + "X+" + b.ToString() + "Y+1=0";
+            double b = Math.Round((x2 - x1) / (x1 * y2 - y1 * x2),4)*100;
+            double a = Math.Round((y1 - y2) / (x1 * y2 - y1 * x2),4)*100;
+            str = a.ToString() + "X+(" + b.ToString() + ")Y+1=0";
             return str;
         }
 
@@ -96,7 +97,20 @@ namespace line
 
         public bool Mouse_Down(MouseEventArgs e, Pen GR) //проверка точки на линии (first, middle, second)
         {
-            if ((e.X >= X1 - 10) && (e.X <= X1 + 10)) //first point
+           
+            if ((e.X >= ((X2 + X1) / 2) - 10 && e.X  <= ((X2 + X1) / 2) + 10) || ((e.X <= ((X2 + X1) / 2) - 10 && e.X >= ((X2 + X1) / 2) + 10))) //middle point
+            {
+                if (e.Y  >= ((Y2 + Y1) / 2) - 10 && e.Y  <= ((Y2 + Y1) / 2) + 10)
+                {
+
+                    p3 = true;
+                    pen = GR;
+                    xm = (X2 - X1) / 2;
+                    ym = (Y2 - Y1) / 2;
+                    return true;
+                }
+            }
+            if ((e.X >= X1 - 10) && (e.X <= X1 +10)) //first point
             {
                 if ((e.Y >= Y1 - 10) && (e.Y <= Y1 + 10))
                 {
@@ -121,18 +135,7 @@ namespace line
                 }
             }
 
-            if (e.X >= ((X2 + X1) / 2) - 10 && e.X <= ((X2 + X1) / 2) + 10)//middle point
-            {
-                if (e.Y >= ((Y2 + Y1) / 2) - 10 && e.Y <= ((Y2 + Y1) / 2) + 10)
-                {
-                   
-                    p3 = true;
-                    pen = GR;
-                    xm = (X2 - X1) / 2;
-                    ym = (Y2 - Y1) / 2;
-                    return true;
-                }
-            }
+            
             return false;
         }
 
@@ -158,6 +161,59 @@ namespace line
             }
         }
 
+
+        public void Button_move(float x, float y)
+        {
+            X1 = X1 + x;
+            Y1 = Y1 + y;
+
+            X2 = X2 + x;
+            Y2 = Y2 + y;
+        }
+        public void Button_rotate(double q)
+        {
+            //X1 = (float)Math.Cos(q) * X1 - (float)Math.Sin(q) * Y1;
+            //Y1 = (float)Math.Cos(q) * Y1 - (float)Math.Sin(q) *X1;
+
+            X2 = (float)Math.Cos(q) * X2 - (float)Math.Sin(q) * Y2;
+            Y2 = (float)Math.Cos(q) * Y2 - (float)Math.Sin(q) * X2;
+        }
+
+        public void Button_fscale(float q)
+        {
+            X1 = q * X1;
+            Y1 = q * Y1;
+
+            X2 = q * X2;
+            Y2 = q * Y2;
+        }
+        public void Button_fscale_xy(float q1,float q2)
+        {
+            X1 = q1 * X1;
+            Y1 = q2 * Y1;
+
+            X2 = q1 * X2;
+            Y2 = q2 * Y2;
+        }
+        public void Button_proj(float p, float q)
+        {
+            X1 = X1 / (X1 * p + q * Y1 + 1);
+            Y1 = Y1 / (X1 * p + q * Y1 + 1);
+
+            X2 = X2 / (X2 * p + q * Y2 + 1);
+            Y2 = Y2 / (X2 * p + q * Y2 + 1);
+        }
+        public void Button_Mirror()
+        {
+            float f = X1;
+            float s = X2;
+            X1 = s;
+            X2 = f;
+            //float fy = Y1;
+            //float sy = Y2;
+            //Y1 = sy;
+            //Y2 = fy;
+        }
     }
 }
 

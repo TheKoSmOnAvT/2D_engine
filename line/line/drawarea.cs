@@ -45,9 +45,9 @@ namespace line
         {
             for(int i=0;i<ln_mas.Count;i++)
             {
-                if((e.X >= ln_mas[i].X1 && e.X <= ln_mas[i].X2) || (e.X >= ln_mas[i].X2-10 && e.X <= ln_mas[i].X1+10)) //+- от  Х
+                if((e.X >= ln_mas[i].X1-2 && e.X <= ln_mas[i].X2+2) || (e.X >= ln_mas[i].X2-2 && e.X <= ln_mas[i].X1+2)) //+- от  Х
                 {
-                    if ((e.Y >= ln_mas[i].Y1 && e.Y <= ln_mas[i].Y2) || (e.Y >= ln_mas[i].Y2-10 && e.Y <= ln_mas[i].Y1+10))  //+- от  Y
+                    if ((e.Y >= ln_mas[i].Y1-2 && e.Y <= ln_mas[i].Y2+2) || (e.Y >= ln_mas[i].Y2-2 && e.Y <= ln_mas[i].Y1+2))  //+- от  Y
                     {
                         NumOfLine = i;
                         return i;
@@ -70,6 +70,7 @@ namespace line
             if (ctr == true && Check_func(e) != -1)
             {
                     ln_mas[NumOfLine].Mouse_Down(e, GR);
+               
             }
             else
             {
@@ -80,11 +81,10 @@ namespace line
                 else
                 {
                     BacktoBlack();
-                    if (ln_mas[NumOfLine].Mouse_Down(e, GR))
-                    {
-                        Clicked = true;
-                        LineofEq.Text = ln_mas[NumOfLine].equation();
-                    }
+                    
+                    ln_mas[NumOfLine].Mouse_Down(e, GR);
+                    Clicked = true;
+                    LineofEq.Text = ln_mas[NumOfLine].equation();
                 }
             }
 
@@ -101,17 +101,19 @@ namespace line
             e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 100, 10, 100);
             e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 200, 10, 200);
             e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 300, 10, 300);
+            e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 400, 10, 400);
 
             e.Graphics.DrawLine(new Pen(Color.Black, 5), 100, 0, 100, 10);
             e.Graphics.DrawLine(new Pen(Color.Black, 5), 200, 0, 200, 10);
             e.Graphics.DrawLine(new Pen(Color.Black, 5), 300, 0, 300, 10);
+            e.Graphics.DrawLine(new Pen(Color.Black, 5), 400, 0, 400, 10);
 
             for (int i = 0; i < ln_mas.Count; i++)
             {
                 e.Graphics.DrawLine(ln_mas[i].pen, ln_mas[i].X1, ln_mas[i].Y1, ln_mas[i].X2, ln_mas[i].Y2);
-                e.Graphics.FillEllipse(redBrush, ln_mas[i].X1, ln_mas[i].Y1, 7, 7);
-                e.Graphics.FillEllipse(redBrush, (ln_mas[i].X2 + ln_mas[i].X1) / 2, (ln_mas[i].Y2 + ln_mas[i].Y1) / 2, 7, 7);
-                e.Graphics.FillEllipse(redBrush, ln_mas[i].X2, ln_mas[i].Y2, 7, 7);
+                e.Graphics.FillEllipse(redBrush, ln_mas[i].X1, ln_mas[i].Y1, 5, 5);
+                e.Graphics.FillEllipse(redBrush, (ln_mas[i].X2 + ln_mas[i].X1) / 2, (ln_mas[i].Y2 + ln_mas[i].Y1) / 2, 5, 5);
+                e.Graphics.FillEllipse(redBrush, ln_mas[i].X2, ln_mas[i].Y2, 5, 5);
             }
         }
 
@@ -164,19 +166,7 @@ namespace line
                 Canvas.Invalidate();
             }
             NumOfLine = -1;
-            //while (check_colore())
-            //{
-            //    NumOfLine = -1;
-            //    for (int i = 0; i < ln_mas.Count; i++)
-            //    {
-            //        if (ln_mas[i].pen == GR)
-            //        {
-            //            ln_mas.RemoveAt(i);
-            //            Canvas.Invalidate();
-            //            i = 0;
-            //        }
-            //    }
-            //}
+           
         }
 
         private void Del_Line_Click(object sender, EventArgs e)
@@ -200,6 +190,131 @@ namespace line
         private void Drawarea_KeyUp(object sender, KeyEventArgs e)
         {
                 ctr = false;
+        }
+
+        private void Label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Text_move_x_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Text_move_y_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button_move_Click(object sender, EventArgs e)
+        {
+            if (NumOfLine != -1)
+            {
+                Stack<int> nums = check_colore();
+                foreach (int i in nums)
+                {
+                    float x = 0;
+                    float y = 0;
+                    if (text_move_x.Text != "") { x = (float)Convert.ToDouble(text_move_x.Text) * 100; }
+                    if (text_move_y.Text != "") { y = (float)Convert.ToDouble(text_move_y.Text) * 100; }
+                    ln_mas[i].Button_move(x, y);//линия
+                    LineofEq.Text = ln_mas[i].equation();
+                }
+            }
+            Canvas.Invalidate();
+        }
+
+        private void Button_rotate_Click(object sender, EventArgs e) //доделать
+        {
+            if (NumOfLine != -1)
+            {
+                Stack<int> nums = check_colore();
+                foreach (int i in nums)
+                {
+                    float q = 0;
+                    if (text_rotate.Text != "") { q = (float)Convert.ToDouble(text_rotate.Text); }
+                    ln_mas[i].Button_rotate(q);//линия
+                    LineofEq.Text = ln_mas[i].equation();
+                }
+            }
+            Canvas.Invalidate();
+        }
+
+        private void Button_fscale_Click(object sender, EventArgs e)
+        {
+            if (NumOfLine != -1)
+            {
+                Stack<int> nums = check_colore();
+                foreach (int i in nums)
+                {
+                    float q = 1;
+                    if (textBox_fscale.Text != "") { q = (float)Convert.ToDouble(textBox_fscale.Text); }
+                    ln_mas[i].Button_fscale(q);//линия
+                    LineofEq.Text = ln_mas[i].equation();
+                }
+            }
+            Canvas.Invalidate();
+        }
+
+        private void TextBox_fscale_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button_scale_Click(object sender, EventArgs e)
+        {
+            if (NumOfLine != -1)
+            {
+                Stack<int> nums = check_colore();
+                foreach (int i in nums)
+                {
+                    float q1 = 1;
+                    float q2 = 1;
+                    if (text_scale_x.Text != "") { q1 = (float)Convert.ToDouble(text_scale_x.Text); }
+                    if (text_scale_y.Text != "") { q2 = (float)Convert.ToDouble(text_scale_y.Text); }
+                    ln_mas[i].Button_fscale_xy(q1, q2);//линия
+                    LineofEq.Text = ln_mas[i].equation();
+                }
+            }
+            Canvas.Invalidate();
+        }
+
+        private void Button_poject_Click(object sender, EventArgs e) //???
+        {
+            if (NumOfLine != -1)
+            {
+                Stack<int> nums = check_colore();
+                foreach (int i in nums)
+                {
+                    float p = 0;
+                    float q = 0;
+                    if (text_project_p.Text != "") { p = (float)Convert.ToDouble(text_project_p.Text); }
+                    if (text_project_q.Text != "") { q = (float)Convert.ToDouble(text_project_q.Text); }
+                    ln_mas[i].Button_proj(p, q);//линия
+                    LineofEq.Text = ln_mas[i].equation();
+                }
+            }
+            Canvas.Invalidate();
+        }
+
+        private void Text_project_p_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button_mirror_Click(object sender, EventArgs e)
+        {
+            if (NumOfLine != -1)
+            {
+                Stack<int> nums = check_colore();
+                foreach (int i in nums)
+                {
+                    ln_mas[i].Button_Mirror();//линия
+                    LineofEq.Text = ln_mas[i].equation();
+                }
+            }
+            Canvas.Invalidate();
         }
     }
 }
