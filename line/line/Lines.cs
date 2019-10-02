@@ -81,8 +81,16 @@ namespace line
         public string equation()
         {
             string str = null;
-            double b = Math.Round((x2 - x1) / (x1 * y2 - y1 * x2),4)*100;
-            double a = Math.Round((y1 - y2) / (x1 * y2 - y1 * x2),4)*100;
+            double c = Math.Round(x1 * y2 - y1 * x2,1);
+            if ((c <=0.1 || c>=-0.1)&&(y1== x1 & y2 == x2))
+            {
+                double b1 = Math.Round((x2 - x1), 4) /100;
+                double a1 = Math.Round((y1 - y2), 4) /100;
+                str = a1.ToString() + "X+(" + b1.ToString() + ")Y+0=0";
+                return str;
+            }
+            double b = Math.Round((x2 - x1) / (c), 4) * 100;
+            double a = Math.Round((y1 - y2) / (c), 4) * 100;
             str = a.ToString() + "X+(" + b.ToString() + ")Y+1=0";
             return str;
         }

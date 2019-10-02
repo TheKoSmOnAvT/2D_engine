@@ -15,6 +15,7 @@ namespace line
 {
     public partial class drawarea : Form
     {
+        bool area = false;
         Random rnd = new Random();
         bool Clicked = false; //нажатие ПКМ
         bool ctr = false; //нажат ctrl
@@ -22,6 +23,7 @@ namespace line
 
            
         List<Lines> ln_mas = new List<Lines>(); //словарь координат линий
+        int count = 0;
         Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
         SolidBrush redBrush = new SolidBrush(Color.Red); //станд. рисовки закрашенной окружности (цвет)
 
@@ -43,12 +45,16 @@ namespace line
 
         public int Check_func(MouseEventArgs e) //обход массива с точками для поиска и обработки нужной iй линии
         {
-            for(int i=0;i<ln_mas.Count;i++)
+            count = ln_mas.Count-1;
+            for (int i=0;i<ln_mas.Count;i++)
             {
                 if((e.X >= ln_mas[i].X1-2 && e.X <= ln_mas[i].X2+2) || (e.X >= ln_mas[i].X2-2 && e.X <= ln_mas[i].X1+2)) //+- от  Х
                 {
                     if ((e.Y >= ln_mas[i].Y1-2 && e.Y <= ln_mas[i].Y2+2) || (e.Y >= ln_mas[i].Y2-2 && e.Y <= ln_mas[i].Y1+2))  //+- от  Y
                     {
+                        Lines exmpl = ln_mas[i];
+                        ln_mas.Remove(exmpl);
+                        ln_mas.Insert(count, exmpl);
                         NumOfLine = i;
                         return i;
                     }
@@ -90,24 +96,32 @@ namespace line
 
         }
 
-        private void Canvas_Paint(object sender, PaintEventArgs e) //отрисовка линий
+        public void Draw_Area(PaintEventArgs e) //отрисовка поля
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 10, 480, new StringFormat());
-            e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 480, 10, new StringFormat());
-            e.Graphics.DrawLine(new Pen(Color.Black, 8), 0,0,0, 500);
-            e.Graphics.DrawLine(new Pen(Color.Black, 8), 0, 0, 500, 0);
+            if(area ==true)
+            {
+                for(int i=0;i<30;i++)
+                {
+                    e.Graphics.DrawLine(new Pen(Color.Black, 1), 0, i*100, 2000, i*100);
+                    e.Graphics.DrawLine(new Pen(Color.Black, 1),  i * 100, 0, i * 100, 2000);
+                    if (i == 4)
+                    {
+                        e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 450, 400, new StringFormat());
+                        e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 420, 50, new StringFormat());
 
-            e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 100, 10, 100);
-            e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 200, 10, 200);
-            e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 300, 10, 300);
-            e.Graphics.DrawLine(new Pen(Color.Black, 5), 0, 400, 10, 400);
+                        e.Graphics.DrawLine(new Pen(Color.Black, 3), 0, i * 100, 2000, i * 100);
+                        e.Graphics.DrawLine(new Pen(Color.Black, 3), i * 100, 0, i * 100, 2000);
+                    }
+                }
+            }
 
-            e.Graphics.DrawLine(new Pen(Color.Black, 5), 100, 0, 100, 10);
-            e.Graphics.DrawLine(new Pen(Color.Black, 5), 200, 0, 200, 10);
-            e.Graphics.DrawLine(new Pen(Color.Black, 5), 300, 0, 300, 10);
-            e.Graphics.DrawLine(new Pen(Color.Black, 5), 400, 0, 400, 10);
+        }
 
+
+        private void Canvas_Paint(object sender, PaintEventArgs e) //отрисовка линий
+        {
+            Draw_Area(e);
             for (int i = 0; i < ln_mas.Count; i++)
             {
                 e.Graphics.DrawLine(ln_mas[i].pen, ln_mas[i].X1, ln_mas[i].Y1, ln_mas[i].X2, ln_mas[i].Y2);
@@ -289,8 +303,10 @@ namespace line
                 {
                     float p = 0;
                     float q = 0;
-                    if (text_project_p.Text != "") { p = (float)Convert.ToDouble(text_project_p.Text); }
-                    if (text_project_q.Text != "") { q = (float)Convert.ToDouble(text_project_q.Text); }
+                    try { p = (float)Convert.ToDouble(text_project_p.Text); }
+                    catch { p = 0; }
+                    try { q = (float)Convert.ToDouble(text_project_q.Text); }
+                    catch { q = 0; }
                     ln_mas[i].Button_proj(p, q);//линия
                     LineofEq.Text = ln_mas[i].equation();
                 }
@@ -315,6 +331,20 @@ namespace line
                 }
             }
             Canvas.Invalidate();
+        }
+
+       private void Button_area_Click(object sender, EventArgs e)
+        {
+            if(area == false)
+            {
+                area = true;
+                Canvas.Invalidate();
+            }
+            else
+            {
+                area = false;
+                Canvas.Invalidate();
+            }
         }
     }
 }
