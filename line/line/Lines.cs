@@ -82,7 +82,7 @@ namespace line
         {
             string str = null;
             double c = Math.Round(x1 * y2 - y1 * x2,1);
-            if ((c <=0.1 || c>=-0.1)&&(y1== x1 & y2 == x2))
+            if ((c <=0.1 && c>=-0.1) /*&& Math.Round((x2 - x1), 1)== Math.Round((y1 - y2), 1)*/)
             {
                 double b1 = Math.Round((x2 - x1), 4) /100;
                 double a1 = Math.Round((y1 - y2), 4) /100;
