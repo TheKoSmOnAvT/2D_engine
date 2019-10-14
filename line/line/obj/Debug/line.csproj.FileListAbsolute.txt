@@ -8,3 +8,13 @@ D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.csproj.CoreCompileInpu
 D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.exe
 D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.pdb
 D:\PTSU\Графика\лаба1\line\line\obj\Debug\line.drawarea.resources
+D:\PTSU\Графика\лаба1\2D_engine\line\line\bin\Debug\line.exe.config
+D:\PTSU\Графика\лаба1\2D_engine\line\line\bin\Debug\line.exe
+D:\PTSU\Графика\лаба1\2D_engine\line\line\bin\Debug\line.pdb
+D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.csprojAssemblyReference.cache
+D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.drawarea.resources
+D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.Properties.Resources.resources
+D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.csproj.GenerateResource.cache
+D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.csproj.CoreCompileInputs.cache
+D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.exe
+D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.pdb
