@@ -68,6 +68,7 @@
       <DependentUpon>drawarea.cs</DependentUpon>
     </Compile>
     <Compile Include="Lines.cs" />
+    <Compile Include="mas_lines.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="drawarea.resx">
