@@ -15,6 +15,5 @@ D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.csprojAssemb
 D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.drawarea.resources
 D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.Properties.Resources.resources
 D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.csproj.GenerateResource.cache
-D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.csproj.CoreCompileInputs.cache
 D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.exe
 D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.pdb

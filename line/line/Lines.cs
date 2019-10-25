@@ -217,10 +217,6 @@ namespace line
             float s = X2;
             X1 = s;
             X2 = f;
-            //float fy = Y1;
-            //float sy = Y2;
-            //Y1 = sy;
-            //Y2 = fy;
         }
     }
 }
