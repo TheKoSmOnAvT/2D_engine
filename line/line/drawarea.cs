@@ -237,54 +237,58 @@ namespace line
         {
             if (figures.NumOfLine != -1)
             {
-                Stack<int> nums = figures.check_colore();
-                foreach (int i in nums)
-                {
-                    float x = 0;
-                    float y = 0;
-                   try { x = (float)Convert.ToDouble(text_move_x.Text) * 100; }
-                    catch { x = 0; }
-                   try { y = (float)Convert.ToDouble(text_move_y.Text) * 100; }
-                    catch { y = 0; }
-                    figures.ln_mas[i].Button_move(x, y);//линия
-                    LineofEq.Text = figures.ln_mas[i].equation();
-                }
+                //Stack<int> nums = figures.check_colore();
+                //foreach (int i in nums)
+                //{
+                //    float x = 0;
+                //    float y = 0;
+                //   try { x = (float)Convert.ToDouble(text_move_x.Text) * 100; }
+                //    catch { x = 0; }
+                //   try { y = (float)Convert.ToDouble(text_move_y.Text) * 100; }
+                //    catch { y = 0; }
+                //    figures.ln_mas[i].Button_move(x, y);//линия
+                figures.Button_move_Click(sender,e, text_move_x.Text, text_move_y.Text);
+                LineofEq.Text = figures.toString();
+                Canvas.Invalidate();
             }
-            Canvas.Invalidate();
+           
         }
 
         private void Button_rotate_Click(object sender, EventArgs e) //доделать
         {
             if (figures.NumOfLine != -1)
             {
-                Stack<int> nums = figures.check_colore();
-                foreach (int i in nums)
-                {
-                    float q = 0;
-                    try { q = (float)Convert.ToDouble(text_rotate.Text); }
-                    catch { q = 0; }
-                    figures.ln_mas[i].Button_rotate(q);//линия
-                    LineofEq.Text = figures.ln_mas[i].equation();
-                }
+                //Stack<int> nums = figures.check_colore();
+                //foreach (int i in nums)
+                //{
+                //    float q = 0;
+                //    try { q = (float)Convert.ToDouble(text_rotate.Text); }
+                //    catch { q = 0; }
+                //    figures.ln_mas[i].Button_rotate(q);//линия
+                figures.Button_rotate_Click(sender,e, text_rotate.Text);
+                LineofEq.Text = figures.toString();
+                Canvas.Invalidate();
             }
-            Canvas.Invalidate();
+            
         }
 
         private void Button_fscale_Click(object sender, EventArgs e)
         {
             if (figures.NumOfLine != -1)
             {
-                Stack<int> nums = figures.check_colore();
-                foreach (int i in nums)
-                {
-                    float q = 1;
-                    try { q = (float)Convert.ToDouble(textBox_fscale.Text); }
-                    catch { q = 1; }
-                    figures.ln_mas[i].Button_fscale(q);//линия
-                    LineofEq.Text = figures.ln_mas[i].equation();
-                }
+                //    Stack<int> nums = figures.check_colore();
+                //    foreach (int i in nums)
+                //    {
+                //        float q = 1;
+                //        try { q = (float)Convert.ToDouble(textBox_fscale.Text); }
+                //        catch { q = 1; }
+                //        figures.ln_mas[i].Button_fscale(q);//линия
+                figures.Button_fscale_Click(sender,e, textBox_fscale.Text);
+                LineofEq.Text = figures.toString();
+                Canvas.Invalidate();
             }
-            Canvas.Invalidate();
+            
+           
         }
 
         private void TextBox_fscale_TextChanged(object sender, EventArgs e)
@@ -296,40 +300,42 @@ namespace line
         {
             if (figures.NumOfLine != -1)
             {
-                Stack<int> nums = figures.check_colore();
-                foreach (int i in nums)
-                {
-                    float q1 = 1;
-                    float q2 = 1;
-                    try { q1 = (float)Convert.ToDouble(text_scale_x.Text); }
-                    catch { q1 = 1; }
-                    try { q2 = (float)Convert.ToDouble(text_scale_y.Text); }
-                    catch { q2 = 1; }
-                    figures.ln_mas[i].Button_fscale_xy(q1, q2);//линия
-                    LineofEq.Text = figures.ln_mas[i].equation();
-                }
-            }
-            Canvas.Invalidate();
+                //Stack<int> nums = figures.check_colore();
+                //foreach (int i in nums)
+                //{
+                //    float q1 = 1;
+                //    float q2 = 1;
+                //    try { q1 = (float)Convert.ToDouble(text_scale_x.Text); }
+                //    catch { q1 = 1; }
+                //    try { q2 = (float)Convert.ToDouble(text_scale_y.Text); }
+                //    catch { q2 = 1; }
+                //    figures.ln_mas[i].Button_fscale_xy(q1, q2);//линия
+                figures.Button_scale_Click(sender,e, text_scale_x.Text, text_scale_y.Text);
+                LineofEq.Text = figures.toString();
+                Canvas.Invalidate();
+            } 
         }
 
         private void Button_poject_Click(object sender, EventArgs e) //???
         {
             if (figures.NumOfLine != -1)
             {
-                Stack<int> nums = figures.check_colore();
-                foreach (int i in nums)
-                {
-                    float p = 0;
-                    float q = 0;
-                    try { p = (float)Convert.ToDouble(text_project_p.Text); }
-                    catch { p = 0; }
-                    try { q = (float)Convert.ToDouble(text_project_q.Text); }
-                    catch { q = 0; }
-                    figures.ln_mas[i].Button_proj(p, q);//линия
-                    LineofEq.Text = figures.ln_mas[i].equation();
-                }
+                //Stack<int> nums = figures.check_colore();
+                //foreach (int i in nums)
+                //{
+                //    float p = 0;
+                //    float q = 0;
+                //    try { p = (float)Convert.ToDouble(text_project_p.Text); }
+                //    catch { p = 0; }
+                //    try { q = (float)Convert.ToDouble(text_project_q.Text); }
+                //    catch { q = 0; }
+                //    figures.ln_mas[i].Button_proj(p, q);//линия
+                figures.Button_poject_Click(sender, e , text_project_p.Text, text_project_q.Text);
+                LineofEq.Text = figures.toString();
+                Canvas.Invalidate();
             }
-            Canvas.Invalidate();
+            
+            
         }
 
         private void Text_project_p_TextChanged(object sender, EventArgs e)
@@ -341,14 +347,17 @@ namespace line
         {
             if (figures.NumOfLine != -1)
             {
-                Stack<int> nums = figures.check_colore();
-                foreach (int i in nums)
-                {
-                    figures.ln_mas[i].Button_Mirror();//линия
-                    LineofEq.Text = figures.ln_mas[i].equation();
-                }
+                //Stack<int> nums = figures.check_colore();
+                //foreach (int i in nums)
+                //{
+                //    figures.ln_mas[i].Button_Mirror();//линия
+                //    LineofEq.Text = figures.ln_mas[i].equation();
+                //}
+                figures.Button_mirror_Click(sender,e);
+                LineofEq.Text = figures.toString();
+                Canvas.Invalidate();
             }
-            Canvas.Invalidate();
+           
         }
 
        private void Button_area_Click(object sender, EventArgs e)
