@@ -64,13 +64,14 @@ namespace line
                 {
                     e.Graphics.DrawLine(new Pen(Color.Black, 1), 0, i * 100, 2000, i * 100);
                     e.Graphics.DrawLine(new Pen(Color.Black, 1), i * 100, 0, i * 100, 2000);
-                    if (i == 4)
+                    if (i == 0)
                     {
-                        e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 450, 400, new StringFormat());
-                        e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 420, 50, new StringFormat());
+                        e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 50, 10, new StringFormat());
+                        e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 10, 50, new StringFormat());
 
                         e.Graphics.DrawLine(new Pen(Color.Black, 3), 0, i * 100, 2000, i * 100);
                         e.Graphics.DrawLine(new Pen(Color.Black, 3), i * 100, 0, i * 100, 2000);
+                        e.Graphics.FillEllipse(redBrush, 0, 0, 5, 5);
                     }
                 }
             }
@@ -119,7 +120,29 @@ namespace line
                  }
             }
         }
-  
+
+        public string toString_xyz1()
+        {
+            if (NumOfLine != -1)
+            {
+                return ln_mas[NumOfLine].xyz1();
+            }
+            else
+            {
+                return "";
+            }
+        }
+        public string toString_xyz2()
+        {
+            if (NumOfLine != -1)
+            {
+                return ln_mas[NumOfLine].xyz2();
+            }
+            else
+            {
+                return "";
+            }
+        }
         public string toString()
         {
             if (NumOfLine != -1)
@@ -137,11 +160,7 @@ namespace line
             if (Clicked && (ln_mas[NumOfLine].p1 || ln_mas[NumOfLine].p2 || ln_mas[NumOfLine].p3))
             {
                 ln_mas[NumOfLine].Mouse_Move(e);
-                //LineofEq.Text = ln_mas[NumOfLine].equation();
-                //Canvas.Invalidate();
-                
             }
-
         }
 
         public void Canvas_MouseUp(object sender, MouseEventArgs e) //сброс временных переменных при окончании действия мышью
@@ -172,7 +191,7 @@ namespace line
 
 
 
-        public void Button_move_Click(object sender, EventArgs e, string sx, string sy )
+        public void Button_move_Click(object sender, EventArgs e, string sx, string sy , string sz)
         {
             if (NumOfLine != -1)
             {
@@ -181,30 +200,36 @@ namespace line
                 {
                     float x = 0;
                     float y = 0;
+                    float z = 0;
                     try { x = (float)Convert.ToDouble(sx) * 100; }
                     catch { x = 0; }
                     try { y = (float)Convert.ToDouble(sy) * 100; }
                     catch { y = 0; }
-                    ln_mas[i].Button_move(x, y);//линия
-                    //LineofEq.Text = figures.ln_mas[i].equation();
+                    try { z = (float)Convert.ToDouble(sz) * 100; }
+                    catch { z = 0; }
+                    ln_mas[i].Button_move(x, y,z);//линия
                 }
             }
         }
-        public void Button_rotate_Click(object sender, EventArgs e, string text_rotate) //доделать
+        public void Button_rotate_Click(object sender, EventArgs e, string text_x, string text_y, string text_z) 
         {
             if (NumOfLine != -1)
             {
                 Stack<int> nums = check_colore();
                 foreach (int i in nums)
                 {
-                    float q = 0;
-                    try { q = (float)Convert.ToDouble(text_rotate); }
-                    catch { q = 0; }
-                    ln_mas[i].Button_rotate(q);//линия
-                    //LineofEq.Text = figures.ln_mas[i].equation();
+                    float x = 0;
+                    float y = 0;
+                    float z = 0;
+                    try { x = (float)Convert.ToDouble(text_x); }
+                    catch { x = 0; }
+                    try { y = (float)Convert.ToDouble(text_y); }
+                    catch { y = 0; }
+                    try { z = (float)Convert.ToDouble(text_z); }
+                    catch { z = 0; }
+                    ln_mas[i].Button_rotate(x,y,z);//линия
                 }
             }
-           // Canvas.Invalidate();
         }
 
 
@@ -219,14 +244,12 @@ namespace line
                     try { q = (float)Convert.ToDouble(textBox_fscale); }
                     catch { q = 1; }
                     ln_mas[i].Button_fscale(q);//линия
-                    //LineofEq.Text = figures.ln_mas[i].equation();
                 }
             }
-            //Canvas.Invalidate();
         }
 
 
-        public void Button_scale_Click(object sender, EventArgs e, string text_scale_x, string text_scale_y)
+        public void Button_scale_Click(object sender, EventArgs e, string text_scale_x, string text_scale_y, string text_scale_z)
         {
             if (NumOfLine != -1)
             {
@@ -235,18 +258,19 @@ namespace line
                 {
                     float q1 = 1;
                     float q2 = 1;
+                    float q3 = 1;
                     try { q1 = (float)Convert.ToDouble(text_scale_x); }
                     catch { q1 = 1; }
                     try { q2 = (float)Convert.ToDouble(text_scale_y); }
                     catch { q2 = 1; }
-                    ln_mas[i].Button_fscale_xy(q1, q2);//линия
-                    //LineofEq.Text = figures.ln_mas[i].equation();
+                    try { q3 = (float)Convert.ToDouble(text_scale_z); }
+                    catch { q3 = 1; }
+                    ln_mas[i].Button_fscale_xy(q1, q2,q3);//линия
                 }
             }
-            //Canvas.Invalidate();
         }
 
-        public void Button_poject_Click(object sender, EventArgs e, string text_project_p, string text_project_q) //???
+        public void Button_poject_Click(object sender, EventArgs e, string text_project_p, string text_project_q) 
         {
             if (NumOfLine != -1)
             {
@@ -260,10 +284,8 @@ namespace line
                     try { q = (float)Convert.ToDouble(text_project_q); }
                     catch { q = 0; }
                     ln_mas[i].Button_proj(p, q);//линия
-                    //LineofEq.Text = figures.ln_mas[i].equation();
                 }
             }
-            //Canvas.Invalidate();
         }
 
         public void Button_mirror_Click(object sender, EventArgs e)
@@ -274,10 +296,8 @@ namespace line
                 foreach (int i in nums)
                 {
                     ln_mas[i].Button_Mirror();//линия
-                    //LineofEq.Text = figures.ln_mas[i].equation();
                 }
             }
-            //Canvas.Invalidate();
         }
     }
 }
