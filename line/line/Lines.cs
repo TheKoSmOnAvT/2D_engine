@@ -17,7 +17,10 @@ namespace line
         private float y1;
         private float x2;
         private float y2;
+        private float z1;
+        private float z2;
 
+        public bool sys_coord = false; //false-global, true-local
         public bool p1 = false; //работа с краями или центром линии
         public bool p2 = false;
         public bool p3 = false;
@@ -29,11 +32,123 @@ namespace line
         public float xm = 0;
         public float ym = 0;
 
+        public float[,] matrix_line = {
+            {0,0,0,0 },
+            {0,0,0,0},
+            {0,0,0,0 },
+            {0,0,0,0 }
+            };
+        public float[,] matrix_rotate_x = {
+            {0,0,0,0 },
+            {0,0,0,0},
+            {0,0,0,0 },
+            {0,0,0,0 }
+            };
+        public float[,] matrix_rotate_y = {
+            {0,0,0,0 },
+            {0,0,0,0},
+            {0,0,0,0 },
+            {0,0,0,0 }
+            };
+        public float[,] matrix_rotate_z = {
+            {0,0,0,0 },
+            {0,0,0,0},
+            {0,0,0,0 },
+            {0,0,0,0 }
+            };
+        public float[,] matrix_mirror = {
+            {-1,0,0,0 },
+            {0,-1,0,0},
+            {0,0,1,0 },
+            {0,0,0,1 }
+            };
+        public float[,] matrix_proj_q = {
+            {1,0,0,0 },
+            {0,1,0,0},
+            {0,0,0,0 },
+            {0,0,0,1 }
+            };
+        public float[,] matrix_proj_p = {
+            {1,0,0,0 },
+            {0,1,0,0},
+            {0,0,0,0 },
+            {0,0,0,1 }
+            };
+        public float[,] matrix_move = {
+            {1,0,0,0 },
+            {0,1,0,0},
+            {0,0,1,0 },
+            {0,0,0,1 }
+            };
+        public void form_matrix()
+        {
+            matrix_line[0, 0] = x1;
+            matrix_line[1, 0] = x2;
+            matrix_line[0, 2] = z1;
+            matrix_line[1, 2] = z2;
+            matrix_line[0, 1] = y1;
+            matrix_line[1, 1] = y2;
+            matrix_line[0, 3] = matrix_line[1, 3] = matrix_line[3, 3] = 1;
+        }
+
+        public void form_matrix_rotate_x(float a)
+        {
+            matrix_rotate_x[0, 0] = 1;
+            matrix_rotate_x[1, 1] = (float)Math.Cos(a);
+            matrix_rotate_x[1, 2] = (float)Math.Sin(a);
+            matrix_rotate_x[2, 2] = (float)Math.Cos(a);
+            matrix_rotate_x[2, 1] = (-1)*(float)Math.Sin(a);
+            matrix_rotate_x[3, 3] = 1;
+        }
+
+        public void form_matrix_rotate_y(float a)
+        {
+            matrix_rotate_y[0, 0] = (float)Math.Cos(a);
+            matrix_rotate_y[0, 2] = (-1) * (float)Math.Sin(a);
+            matrix_rotate_y[1, 1] = 1;
+            matrix_rotate_y[0, 2] = (float)Math.Sin(a);
+            matrix_rotate_y[2, 2] = (float)Math.Cos(a);
+            matrix_rotate_y[3, 3] = 1;
+        }
+
+        public void form_matrix_rotate_z(float a)
+        {
+            matrix_rotate_z[0, 0] = (float)Math.Cos(a);
+            matrix_rotate_z[1, 0] = (-1) * (float)Math.Sin(a);
+            matrix_rotate_z[2, 2] = 1;
+            matrix_rotate_z[0, 1] = (float)Math.Sin(a);
+            matrix_rotate_z[1, 1] = (float)Math.Cos(a);
+            matrix_rotate_z[3, 3] = 1;
+        }
+
+        public void check_oc() //проверка О.К.
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                if(matrix_line[i,3] !=1 && matrix_line[i,3] != 0)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        matrix_line[i, j] = matrix_line[i, j] / matrix_line[i, 3];
+                        matrix_line[i, 3] = 1;
+                    }
+                }
+            }
+        }
+        public void update_loc_form_matrix() //обновление координат
+        {
+            check_oc();
+            x1 = matrix_line[0, 0] ;
+            x2 = matrix_line[1, 0] ;
+            z1 = matrix_line[0, 2] ;
+            z2 = matrix_line[1, 2] ;
+            y1 = matrix_line[0, 1] ;
+            y2 = matrix_line[1, 1] ;
+        }
 
         public Lines()
         {
-            x1 = y1 = x2 = y2 = 0;
-            //pen = new Pen(Color.Black, 3);
+            z1 = z2 = x1 = y1 = x2 = y2 = 0;
         }
         public Lines(float X, float Y, float XX, float YY)
         {
@@ -41,6 +156,16 @@ namespace line
             Y1 = Y;
             X2 = XX;
             Y2 = YY;
+        }
+
+        public Lines(float X, float Y, float Z, float XX, float YY, float ZZ)
+        {
+            X1 = X;
+            Y1 = Y;
+            X2 = XX;
+            Y2 = YY;
+            Z1 = Z;
+            Z2 = ZZ;
         }
 
         public float X1
@@ -76,8 +201,32 @@ namespace line
             get { return y2; }
 
         }
+        public float Z1
+        {
+            set
+            {
+                z1 = value;
+            }
+            get { return z1; }
+        }
+        public float Z2
+        {
+            set
+            {
+                z2 = value;
+            }
+            get { return z2; }
 
+        }
 
+        public string xyz1()
+        {
+            return "( " + X1 / 100 + " : " + Y1 / 100 + " : " + Z1 / 100 + ") ";
+        }
+        public string xyz2()
+        {
+            return "( " + X2/100 + " : " + Y2/100 + " : " + Z2 / 100 + ") ";
+        }
         public string equation()
         {
             string str = null;
@@ -170,54 +319,105 @@ namespace line
         }
 
 
-        public void Button_move(float x, float y)
+        public void Button_move(float x, float y, float z)
         {
-            X1 = X1 + x;
-            Y1 = Y1 + y;
-
-            X2 = X2 + x;
-            Y2 = Y2 + y;
+            matrix_move[3,0]= x;
+            matrix_move[3,1] =y;
+            matrix_move[3, 2] = z;
+            form_matrix();
+            matrix_line = Matrix(matrix_line, matrix_move);
+            update_loc_form_matrix();
+            
         }
-        public void Button_rotate(double q)
+        public void change_or_z()
         {
-            //X1 = (float)Math.Cos(q) * X1 - (float)Math.Sin(q) * Y1;
-            //Y1 = (float)Math.Cos(q) * Y1 - (float)Math.Sin(q) *X1;
+            if (z1 == 0 )
+            {
+                return;
+            }
+            if (z2 == 0)
+            {
+               return;
+            }
+            //Console.WriteLine(z1.ToString() + " " + x1.ToString() + " " + y1.ToString() + " " + z2.ToString() + " " + x2.ToString() + " " + y2.ToString());
+            X1 = z1 * X1;
+            Y1 = z1 * Y1;
 
-            X2 = (float)Math.Cos(q) * X2 - (float)Math.Sin(q) * Y2;
-            Y2 = (float)Math.Cos(q) * Y2 - (float)Math.Sin(q) * X2;
+            X2 = z2 * X2;
+            Y2 = z2 * Y2;
+        }
+        public void Button_rotate(double x, double y, double z)
+        {
+            x = x / 100;
+            y = y / 100;
+            z = z / 100;
+            form_matrix();
+            form_matrix_rotate_x((float)x);
+            form_matrix_rotate_y((float)y);
+            form_matrix_rotate_z((float)z);
+            matrix_line = Matrix(matrix_line, matrix_rotate_x);
+            matrix_line = Matrix(matrix_line, matrix_rotate_y);
+            matrix_line = Matrix(matrix_line, matrix_rotate_z);
+            update_loc_form_matrix();
+
         }
 
         public void Button_fscale(float q)
         {
             X1 = q * X1;
             Y1 = q * Y1;
-
+            Z1 = q * Z1;
+            Z2 = q * Z2;
             X2 = q * X2;
             Y2 = q * Y2;
         }
-        public void Button_fscale_xy(float q1,float q2)
+        public void Button_fscale_xy(float q1,float q2, float q3)
         {
             X1 = q1 * X1;
             Y1 = q2 * Y1;
+            Z1 = q3 * Z1;
+            Z2 = q3 * Z2;
 
             X2 = q1 * X2;
             Y2 = q2 * Y2;
         }
-        public void Button_proj(float p, float q)
+        public void Button_proj(float p, float q)//q работает криво 
         {
-            X1 = X1 / (X1 * p + q * Y1 + 1);
-            Y1 = Y1 / (X1 * p + q * Y1 + 1);
+            matrix_proj_p[0, 3] = (1 / p)*(-1);
+            matrix_proj_q[1, 3] = (1 / q) * (-1);
 
-            X2 = X2 / (X2 * p + q * Y2 + 1);
-            Y2 = Y2 / (X2 * p + q * Y2 + 1);
+            form_matrix();
+            matrix_line = Matrix(matrix_line, matrix_proj_p);
+            matrix_line = Matrix(matrix_line, matrix_proj_q);
+            update_loc_form_matrix();
+
         }
-        public void Button_Mirror()
+        public void Button_Mirror() 
         {
-            float f = X1;
-            float s = X2;
-            X1 = s;
-            X2 = f;
+            form_matrix();
+            matrix_line = Matrix(matrix_line, matrix_mirror);
+            update_loc_form_matrix();
         }
+
+        public float[,] Matrix(float[,] a, float[,] b)
+        {
+            float[,] new_mas = new float[4, 4];
+            float sum = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    sum = 0;
+                    for (int j = 0; j < 4; j++)
+                    {
+                        sum = sum + (a[i, j] * b[j, k]);
+                    }
+                    new_mas[i, k] = sum;
+                }
+            }
+            return new_mas;
+        }
+
     }
 }
 
