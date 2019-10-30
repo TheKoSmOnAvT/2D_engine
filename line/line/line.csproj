@@ -67,6 +67,7 @@
     <Compile Include="drawarea.Designer.cs">
       <DependentUpon>drawarea.cs</DependentUpon>
     </Compile>
+    <Compile Include="Group_mas_lines.cs" />
     <Compile Include="Lines.cs" />
     <Compile Include="mas_lines.cs" />
     <Compile Include="Program.cs" />

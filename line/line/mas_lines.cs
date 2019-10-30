@@ -24,8 +24,28 @@ namespace line
 
         public List<Lines> ln_mas = new List<Lines>(); //словарь координат линий
         int count = 0;
-        Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
+        public Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
         SolidBrush redBrush = new SolidBrush(Color.Red); //станд. рисовки закрашенной окружности (цвет)
+
+        public mas_lines(List<Lines> new_mas)
+        {
+            for(int i=0;i< new_mas.Count; i++)
+            {
+                ln_mas.Add(new_mas[i]);
+            }
+           // ln_mas = new_mas;
+        }
+        public mas_lines()
+        {
+        }
+        public void remove_mas(Stack<int> gr_mas)
+        {
+            foreach (int i in gr_mas)
+            {
+                ln_mas.RemoveAt(i);
+            }
+            NumOfLine = -1;
+        }
 
         public int Check_func(MouseEventArgs e) //обход массива с точками для поиска и обработки нужной iй линии
         {
