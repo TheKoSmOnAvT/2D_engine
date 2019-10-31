@@ -84,14 +84,14 @@ namespace line
                 {
                     e.Graphics.DrawLine(new Pen(Color.Black, 1), 0, i * 100, 2000, i * 100);
                     e.Graphics.DrawLine(new Pen(Color.Black, 1), i * 100, 0, i * 100, 2000);
-                    if (i == 0)
+                    if (i == 4)
                     {
-                        e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 50, 10, new StringFormat());
-                        e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 10, 50, new StringFormat());
+                        e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 450, 410, new StringFormat());
+                        e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 410, 450, new StringFormat());
 
                         e.Graphics.DrawLine(new Pen(Color.Black, 3), 0, i * 100, 2000, i * 100);
                         e.Graphics.DrawLine(new Pen(Color.Black, 3), i * 100, 0, i * 100, 2000);
-                        e.Graphics.FillEllipse(redBrush, 0, 0, 5, 5);
+                        e.Graphics.FillEllipse(redBrush, 400, 400, 5, 5);
                     }
                 }
             }

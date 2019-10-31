@@ -64,13 +64,13 @@ namespace line
             };
         public float[,] matrix_proj_q = {
             {1,0,0,0 },
-            {0,1,0,0},
-            {0,0,0,0 },
+            {0,1,0,0 },
+            {0,0,1,0 },
             {0,0,0,1 }
             };
         public float[,] matrix_proj_p = {
             {1,0,0,0 },
-            {0,1,0,0},
+            {0,1,0,0 },
             {0,0,0,0 },
             {0,0,0,1 }
             };
@@ -84,8 +84,10 @@ namespace line
         {
             matrix_line[0, 0] = x1;
             matrix_line[1, 0] = x2;
+
             matrix_line[0, 2] = z1;
             matrix_line[1, 2] = z2;
+
             matrix_line[0, 1] = y1;
             matrix_line[1, 1] = y2;
             matrix_line[0, 3] = matrix_line[1, 3] = matrix_line[3, 3] = 1;
@@ -96,8 +98,8 @@ namespace line
             matrix_rotate_x[0, 0] = 1;
             matrix_rotate_x[1, 1] = (float)Math.Cos(a);
             matrix_rotate_x[1, 2] = (float)Math.Sin(a);
-            matrix_rotate_x[2, 2] = (float)Math.Cos(a);
-            matrix_rotate_x[2, 1] = (-1)*(float)Math.Sin(a);
+            matrix_rotate_x[2, 1] = (-1) * (float)Math.Sin(a);
+            matrix_rotate_x[2, 2] = (float)Math.Cos(a);           
             matrix_rotate_x[3, 3] = 1;
         }
 
@@ -106,7 +108,7 @@ namespace line
             matrix_rotate_y[0, 0] = (float)Math.Cos(a);
             matrix_rotate_y[0, 2] = (-1) * (float)Math.Sin(a);
             matrix_rotate_y[1, 1] = 1;
-            matrix_rotate_y[0, 2] = (float)Math.Sin(a);
+            matrix_rotate_y[2, 0] = (float)Math.Sin(a);
             matrix_rotate_y[2, 2] = (float)Math.Cos(a);
             matrix_rotate_y[3, 3] = 1;
         }
@@ -221,11 +223,17 @@ namespace line
 
         public string xyz1()
         {
-            return "( " + X1 / 100 + " : " + Y1 / 100 + " : " + Z1 / 100 + ") ";
+            unddraw();
+            string st = "( " + X1 / 100 + " : " + Y1 / 100 + " : " + Z1 / 100 + ") ";
+            todraw();
+            return st;
         }
         public string xyz2()
         {
-            return "( " + X2/100 + " : " + Y2/100 + " : " + Z2 / 100 + ") ";
+            unddraw();
+            string st = "( " + X2 / 100 + " : " + Y2 / 100 + " : " + Z2 / 100 + ") ";
+            todraw();
+            return st;
         }
         public string equation()
         {
@@ -242,6 +250,25 @@ namespace line
             double a = Math.Round((y1 - y2) / (c), 4) * 100;
             str = a.ToString() + "X+(" + b.ToString() + ")Y+1=0";
             return str;
+        }
+
+        public void todraw()
+        {
+            x1+=400;
+            y1+=400;
+            x2+=400;
+            y2+=400;
+            z1+=400;
+            z2 += 400;
+        }
+        public void unddraw()
+        {
+            x1 -= 400;
+            y1 -= 400;
+            x2 -= 400;
+            y2 -= 400;
+            z1 -= 400;
+            z2 -= 400;
         }
 
         public void DownBool() //сброс временных переменных при окончании действия мышью
@@ -321,13 +348,17 @@ namespace line
 
         public void Button_move(float x, float y, float z)
         {
+            unddraw();
+            float z1 = 1 + z;
+            //if (z == 0){ z1 = 1; }
+            form_matrix();
             matrix_move[3,0]= x;
             matrix_move[3,1] =y;
             matrix_move[3, 2] = z;
-            form_matrix();
+           
             matrix_line = Matrix(matrix_line, matrix_move);
             update_loc_form_matrix();
-            
+            todraw();
         }
         public void change_or_z()
         {
@@ -348,6 +379,7 @@ namespace line
         }
         public void Button_rotate(double x, double y, double z)
         {
+            unddraw();
             x = x / 100;
             y = y / 100;
             z = z / 100;
@@ -359,20 +391,23 @@ namespace line
             matrix_line = Matrix(matrix_line, matrix_rotate_y);
             matrix_line = Matrix(matrix_line, matrix_rotate_z);
             update_loc_form_matrix();
-
+            todraw();
         }
 
         public void Button_fscale(float q)
         {
+            unddraw();
             X1 = q * X1;
             Y1 = q * Y1;
             Z1 = q * Z1;
             Z2 = q * Z2;
             X2 = q * X2;
             Y2 = q * Y2;
+            todraw();
         }
         public void Button_fscale_xy(float q1,float q2, float q3)
         {
+            unddraw();
             X1 = q1 * X1;
             Y1 = q2 * Y1;
             Z1 = q3 * Z1;
@@ -380,23 +415,34 @@ namespace line
 
             X2 = q1 * X2;
             Y2 = q2 * Y2;
+            todraw();
         }
         public void Button_proj(float p, float q)//q работает криво 
         {
+            unddraw();
             matrix_proj_p[0, 3] = (1 / p)*(-1);
-            matrix_proj_q[1, 3] = (1 / q) * (-1);
+           
 
             form_matrix();
-            matrix_line = Matrix(matrix_line, matrix_proj_p);
-            matrix_line = Matrix(matrix_line, matrix_proj_q);
+            if (p != 0)
+            {
+               matrix_line = Matrix(matrix_line, matrix_proj_p);
+            }
+            if (p != 0 && q != 0)
+            {
+                matrix_proj_p[1, 3] = (1 / q) * (-1);
+                matrix_line = Matrix(matrix_line, matrix_proj_p);
+            }
             update_loc_form_matrix();
-
+            todraw();
         }
         public void Button_Mirror() 
         {
+            unddraw();
             form_matrix();
             matrix_line = Matrix(matrix_line, matrix_mirror);
             update_loc_form_matrix();
+            todraw();
         }
 
         public float[,] Matrix(float[,] a, float[,] b)
