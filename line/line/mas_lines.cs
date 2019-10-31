@@ -13,7 +13,8 @@ using System.Windows.Forms;
 
 namespace line
 {
-    class mas_lines : Lines
+    [Serializable]
+    public class mas_lines : Lines
     {
         public bool area = false;
         Random rnd = new Random();
@@ -24,7 +25,7 @@ namespace line
 
         public List<Lines> ln_mas = new List<Lines>(); //словарь координат линий
         int count = 0;
-        public Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
+        protected Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
         SolidBrush redBrush = new SolidBrush(Color.Red); //станд. рисовки закрашенной окружности (цвет)
 
         public mas_lines(List<Lines> new_mas)
@@ -71,7 +72,7 @@ namespace line
         {
             for (int i = 0; i < ln_mas.Count; i++)
             {
-                ln_mas[i].pen = new Pen(Color.Black, 3);
+                ln_mas[i].Pen_black();
             }
         }
 
@@ -84,20 +85,20 @@ namespace line
                 {
                     e.Graphics.DrawLine(new Pen(Color.Black, 1), 0, i * 100, 2000, i * 100);
                     e.Graphics.DrawLine(new Pen(Color.Black, 1), i * 100, 0, i * 100, 2000);
-                    if (i == 0)
+                    if (i == 4)
                     {
-                        e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 50, 10, new StringFormat());
-                        e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 10, 50, new StringFormat());
+                        e.Graphics.DrawString("X", new Font("Arial", 20), new SolidBrush(Color.Black), 450, 410, new StringFormat());
+                        e.Graphics.DrawString("Y", new Font("Arial", 20), new SolidBrush(Color.Black), 410, 450, new StringFormat());
 
                         e.Graphics.DrawLine(new Pen(Color.Black, 3), 0, i * 100, 2000, i * 100);
                         e.Graphics.DrawLine(new Pen(Color.Black, 3), i * 100, 0, i * 100, 2000);
-                        e.Graphics.FillEllipse(redBrush, 0, 0, 5, 5);
+                        e.Graphics.FillEllipse(redBrush, 400, 400, 5, 5);
                     }
                 }
             }
             for (int i = 0; i < ln_mas.Count; i++)
             {
-                e.Graphics.DrawLine(ln_mas[i].pen, ln_mas[i].X1, ln_mas[i].Y1, ln_mas[i].X2, ln_mas[i].Y2);
+                e.Graphics.DrawLine(ln_mas[i].what_pen(), ln_mas[i].X1, ln_mas[i].Y1, ln_mas[i].X2, ln_mas[i].Y2);
                 e.Graphics.FillEllipse(redBrush, ln_mas[i].X1, ln_mas[i].Y1, 5, 5);
                 e.Graphics.FillEllipse(redBrush, (ln_mas[i].X2 + ln_mas[i].X1) / 2, (ln_mas[i].Y2 + ln_mas[i].Y1) / 2, 5, 5);
                 e.Graphics.FillEllipse(redBrush, ln_mas[i].X2, ln_mas[i].Y2, 5, 5);
@@ -110,7 +111,7 @@ namespace line
             Stack<int> nums = new Stack<int>();
             for (int i = 0; i < ln_mas.Count; i++)
             {
-                if (ln_mas[i].pen == GR)
+                if (ln_mas[i].what_pen() == GR)
                 {
                     nums.Push(i);
                 }

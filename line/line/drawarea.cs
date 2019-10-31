@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace line
 {
@@ -312,7 +314,7 @@ namespace line
         private void group_button_Click(object sender, EventArgs e)
         {
             groups.add(figures);
-            figures.remove_mas(groups.nums);
+            figures.remove_mas(groups.num_stack());
             add_comb();
             Canvas.Invalidate();
 
@@ -346,6 +348,34 @@ namespace line
         {
             groups.view_group = -1;
             Canvas.Invalidate();
+        }
+
+        private void Open_button_Click(object sender, EventArgs e)
+        {
+
+            string file = "filepath";
+            XmlSerializer formatter = new XmlSerializer(groups.GetType());
+            FileStream aFile = new FileStream(file, FileMode.Open);
+            byte[] buffer = new byte[aFile.Length];
+            aFile.Read(buffer, 0, (int)aFile.Length);
+            MemoryStream stream = new MemoryStream(buffer);
+            groups = (Group_mas_lines)formatter.Deserialize(stream);
+            aFile.Close();
+            add_comb();
+        }
+
+        private void save_button_Click(object sender, EventArgs e)
+        {
+            string path = "filepath";
+            FileStream outFile = File.Create(path);
+            XmlSerializer formatter = new XmlSerializer(groups.GetType());
+            formatter.Serialize(outFile, groups);
+            outFile.Close();
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }
