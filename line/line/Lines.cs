@@ -11,7 +11,8 @@ using System.Windows.Forms;
 
 namespace line
 {
-    class Lines
+    [Serializable]
+    public  class Lines
     {
         private float x1;
         private float y1;
@@ -25,56 +26,56 @@ namespace line
         public bool p2 = false;
         public bool p3 = false;
 
-        public Pen pen = new Pen(Color.Black, 3);
+        protected Pen pen = new Pen(Color.Black, 3);
 
         public float dX = 0; //дельта переменные
         public float dY = 0;
         public float xm = 0;
         public float ym = 0;
 
-        public float[,] matrix_line = {
+        protected float[,] matrix_line = {
             {0,0,0,0 },
             {0,0,0,0},
             {0,0,0,0 },
             {0,0,0,0 }
             };
-        public float[,] matrix_rotate_x = {
+        protected float[,] matrix_rotate_x = {
             {0,0,0,0 },
             {0,0,0,0},
             {0,0,0,0 },
             {0,0,0,0 }
             };
-        public float[,] matrix_rotate_y = {
+        protected float[,] matrix_rotate_y = {
             {0,0,0,0 },
             {0,0,0,0},
             {0,0,0,0 },
             {0,0,0,0 }
             };
-        public float[,] matrix_rotate_z = {
+        protected float[,] matrix_rotate_z = {
             {0,0,0,0 },
             {0,0,0,0},
             {0,0,0,0 },
             {0,0,0,0 }
             };
-        public float[,] matrix_mirror = {
+        protected float[,] matrix_mirror = {
             {-1,0,0,0 },
             {0,-1,0,0},
             {0,0,1,0 },
             {0,0,0,1 }
             };
-        public float[,] matrix_proj_q = {
+        protected float[,] matrix_proj_q = {
             {1,0,0,0 },
             {0,1,0,0 },
             {0,0,1,0 },
             {0,0,0,1 }
             };
-        public float[,] matrix_proj_p = {
+        protected float[,] matrix_proj_p = {
             {1,0,0,0 },
             {0,1,0,0 },
             {0,0,0,0 },
             {0,0,0,1 }
             };
-        public float[,] matrix_move = {
+        protected float[,] matrix_move = {
             {1,0,0,0 },
             {0,1,0,0},
             {0,0,1,0 },
@@ -170,6 +171,18 @@ namespace line
             Z2 = ZZ;
         }
 
+        public void Pen_green()
+        {
+            pen = new Pen(Color.SeaGreen, 3);
+        }
+        public void Pen_black()
+        {
+            pen = new Pen(Color.Black, 3);
+        }
+        public Pen what_pen()
+        {
+            return pen;
+        }
         public float X1
         {
             set

@@ -13,16 +13,25 @@ using System.Windows.Forms;
 
 namespace line
 {
-    class Group_mas_lines : mas_lines
+    [Serializable]
+    public  class Group_mas_lines : mas_lines
     {
         public List<mas_lines> Mas_group_lines = new List<mas_lines>(); //словарь групп. линий
         public List<string> groups_name = new List<string>(); //имена групп. линий
-        Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
-        public Stack<int> nums;
+        protected Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
+        protected Stack<int> nums;
 
         public int view_group = -1;
         
-        
+        public Stack<int> num_stack()
+        {
+            Stack<int> nums_1 = new Stack<int>();
+            foreach(int i in nums)
+            {
+                nums_1.Push(i);
+            }
+            return nums_1;
+        }
         public void add(mas_lines figures) //добавление группы в словарь 
         {
             view_group = -1;
@@ -52,7 +61,7 @@ namespace line
             {
                 for (int j = 0;j < Mas_group_lines[i].ln_mas.Count; j++)
                 {
-                    Mas_group_lines[i].ln_mas[j].pen = Mas_group_lines[i].GR;
+                    Mas_group_lines[i].ln_mas[j].Pen_green();
                 }
             }
         }
