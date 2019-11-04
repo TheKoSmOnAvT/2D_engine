@@ -40,6 +40,7 @@ namespace line
         }
         private void View_button_Click(object sender, EventArgs e)
         {
+            Canvas_new.Image = null;
             try
             {
                 string st1 = comboBox_t0.SelectedItem.ToString();
@@ -64,12 +65,15 @@ namespace line
         {
             string st = comboBox_t0.SelectedItem.ToString();
             string st1 = comboBox_t1.SelectedItem.ToString();
-            float t = trackBar1.Value / 10;
+            float n = trackBar1.Value;
+            float t = n * (float)0.1;
+           // double t1 = n ;
+            //MessageBox.Show(t.ToString());
             morf.ln_mas.Clear();
             groups.Search_group(st);
-            mas_lines mas1 = groups.Mas_group_lines[groups.view_group];
+            mas_lines mas1 = new mas_lines (groups.Mas_group_lines[groups.view_group]);
             groups.Search_group(st1);
-            mas_lines mas2 = groups.Mas_group_lines[groups.view_group];
+            mas_lines mas2 = new mas_lines (groups.Mas_group_lines[groups.view_group]);
             for (int i=0;i< mas1.ln_mas.Count;i++ )
             {
                 float x1 = 0;
@@ -82,11 +86,12 @@ namespace line
                     x2 = mas1.ln_mas[i].X2 * (1 - t) + mas2.ln_mas[i].X2 * t;
                     y1 = mas1.ln_mas[i].Y1 * (1 - t) + mas2.ln_mas[i].Y1 * t;
                     y2 = mas1.ln_mas[i].Y2 * (1 - t) + mas2.ln_mas[i].Y2 * t;
-                   
-                    MessageBox.Show(x1 + " "+ x2 + " " +y1 + " " + y2);
+
+                    //MessageBox.Show(x1 + " "+ x2 + " " +y1 + " " + y2);
+                    morf.Add(x1, y1, x2, y2);
                 }
                 catch { }
-                morf.Add(x1, y1, x2, y2);
+               
             }
                
         }
