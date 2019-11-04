@@ -28,6 +28,11 @@ namespace line
         protected Pen GR = new Pen(Color.SeaGreen, 3); //цвет для отрисовки выбранных объектов
         SolidBrush redBrush = new SolidBrush(Color.Red); //станд. рисовки закрашенной окружности (цвет)
 
+        public mas_lines(mas_lines new_mas)
+        {
+            ln_mas = new_mas.ln_mas;
+        }
+
         public mas_lines(List<Lines> new_mas)
         {
             for(int i=0;i< new_mas.Count; i++)
@@ -43,7 +48,10 @@ namespace line
         {
             foreach (int i in gr_mas)
             {
+                try { 
                 ln_mas.RemoveAt(i);
+                }
+                catch { }
             }
             NumOfLine = -1;
         }
@@ -197,6 +205,11 @@ namespace line
         public void Add()
         {
             ln_mas.Add(new Lines(rnd.Next(50, 300), rnd.Next(80, 350), rnd.Next(50, 400), rnd.Next(10, 200)));
+        }
+
+        public void Add(float x, float y, float xx, float yy)
+        {
+            ln_mas.Add(new Lines(x, y, xx,  yy));
         }
 
         public void del_lines() //удаление линий

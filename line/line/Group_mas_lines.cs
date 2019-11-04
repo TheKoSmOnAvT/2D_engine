@@ -25,17 +25,31 @@ namespace line
         
         public Stack<int> num_stack()
         {
-            Stack<int> nums_1 = new Stack<int>();
-            foreach(int i in nums)
-            {
-                nums_1.Push(i);
-            }
-            return nums_1;
+            //Stack<int> nums_1 = new Stack<int>();
+            //foreach(int i in nums)
+            //{
+            //    nums_1.Push(i);
+            //}
+            //return nums_1;
+            return nums;
         }
+        
+        public void Clone(Group_mas_lines groups)
+        {
+            foreach(string st in groups.groups_name)
+            {
+                groups_name.Add(st);
+            }
+            foreach (mas_lines gl in groups.Mas_group_lines)
+            {
+                Mas_group_lines.Add(gl);
+            }
+        }
+        
         public void add(mas_lines figures) //добавление группы в словарь 
         {
             view_group = -1;
-            nums = new Stack<int>();
+           // nums = new Stack<int>();
             List<Lines> mas = new List<Lines>();
             Stack<int>  old_line = figures.check_colore();
             nums = old_line;
@@ -43,7 +57,7 @@ namespace line
             {
                 mas.Add(figures.ln_mas[i]);
             }
-                       Mas_group_lines.Add(new mas_lines(mas));
+            Mas_group_lines.Add(new mas_lines(mas));
             groups_name.Add("num: "+( groups_name.Count+1));
           
         }

@@ -17,3 +17,4 @@ D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.Properties.R
 D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.csproj.GenerateResource.cache
 D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.exe
 D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.pdb
+D:\PTSU\Графика\лаба1\2D_engine\line\line\obj\Debug\line.Morfing.resources

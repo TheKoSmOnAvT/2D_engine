@@ -74,7 +74,7 @@
             this.Hide_group = new System.Windows.Forms.Button();
             this.Open_button = new System.Windows.Forms.Button();
             this.save_button = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.Morfing_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -660,9 +660,19 @@
             this.save_button.UseVisualStyleBackColor = true;
             this.save_button.Click += new System.EventHandler(this.save_button_Click);
             // 
-            // saveFileDialog1
+            // Morfing_button
             // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.Morfing_button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Morfing_button.Location = new System.Drawing.Point(1163, 412);
+            this.Morfing_button.MaximumSize = new System.Drawing.Size(75, 23);
+            this.Morfing_button.MinimumSize = new System.Drawing.Size(75, 23);
+            this.Morfing_button.Name = "Morfing_button";
+            this.Morfing_button.Size = new System.Drawing.Size(75, 23);
+            this.Morfing_button.TabIndex = 52;
+            this.Morfing_button.Text = "Morfing";
+            this.Morfing_button.UseVisualStyleBackColor = true;
+            this.Morfing_button.Click += new System.EventHandler(this.Morfing_button_Click);
             // 
             // drawarea
             // 
@@ -670,6 +680,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1264, 641);
+            this.Controls.Add(this.Morfing_button);
             this.Controls.Add(this.save_button);
             this.Controls.Add(this.Open_button);
             this.Controls.Add(this.Hide_group);
@@ -777,7 +788,7 @@
         private System.Windows.Forms.Button Hide_group;
         private System.Windows.Forms.Button Open_button;
         private System.Windows.Forms.Button save_button;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button Morfing_button;
     }
 }
 

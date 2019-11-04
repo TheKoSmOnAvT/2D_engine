@@ -377,5 +377,11 @@ namespace line
         {
 
         }
+
+        private void Morfing_button_Click(object sender, EventArgs e)
+        {
+            Morfing window = new Morfing(groups);
+            window.ShowDialog();
+        }
     }
 }
