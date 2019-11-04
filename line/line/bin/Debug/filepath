@@ -38,7 +38,77 @@
       <area>false</area>
       <Clicked>false</Clicked>
       <ctr>false</ctr>
-      <NumOfLine>0</NumOfLine>
+      <NumOfLine>-1</NumOfLine>
+      <ln_mas>
+        <Lines>
+          <sys_coord>false</sys_coord>
+          <p1>false</p1>
+          <p2>false</p2>
+          <p3>false</p3>
+          <dX>-1</dX>
+          <dY>0.5</dY>
+          <xm>85</xm>
+          <ym>-113</ym>
+          <X1>81</X1>
+          <X2>251</X2>
+          <Y1>571.5</Y1>
+          <Y2>345.5</Y2>
+          <Z1>0</Z1>
+          <Z2>0</Z2>
+        </Lines>
+        <Lines>
+          <sys_coord>false</sys_coord>
+          <p1>false</p1>
+          <p2>false</p2>
+          <p3>false</p3>
+          <dX>0</dX>
+          <dY>0</dY>
+          <xm>-62</xm>
+          <ym>-113.5</ym>
+          <X1>375</X1>
+          <X2>251</X2>
+          <Y1>571.5</Y1>
+          <Y2>344.5</Y2>
+          <Z1>0</Z1>
+          <Z2>0</Z2>
+        </Lines>
+        <Lines>
+          <sys_coord>false</sys_coord>
+          <p1>false</p1>
+          <p2>false</p2>
+          <p3>false</p3>
+          <dX>0</dX>
+          <dY>0</dY>
+          <xm>147</xm>
+          <ym>-2</ym>
+          <X1>80</X1>
+          <X2>374</X2>
+          <Y1>576</Y1>
+          <Y2>572</Y2>
+          <Z1>0</Z1>
+          <Z2>0</Z2>
+        </Lines>
+      </ln_mas>
+    </mas_lines>
+    <mas_lines>
+      <sys_coord>false</sys_coord>
+      <p1>false</p1>
+      <p2>false</p2>
+      <p3>false</p3>
+      <dX>0</dX>
+      <dY>0</dY>
+      <xm>0</xm>
+      <ym>0</ym>
+      <X1>0</X1>
+      <X2>0</X2>
+      <Y1>0</Y1>
+      <Y2>0</Y2>
+      <Z1>0</Z1>
+      <Z2>0</Z2>
+      <area>false</area>
+      <Clicked>false</Clicked>
+      <ctr>false</ctr>
+      <NumOfLine>-1</NumOfLine>
       <ln_mas>
         <Lines>
           <sys_coord>false</sys_coord>
@@ -47,12 +117,44 @@
           <p3>false</p3>
           <dX>0</dX>
           <dY>0</dY>
-          <xm>149</xm>
-          <ym>-8</ym>
-          <X1>556</X1>
-          <X2>854</X2>
-          <Y1>162</Y1>
-          <Y2>146</Y2>
+          <xm>103.5</xm>
+          <ym>-39</ym>
+          <X1>1112.5</X1>
+          <X2>1319.5</X2>
+          <Y1>657</Y1>
+          <Y2>579</Y2>
+          <Z1>0</Z1>
+          <Z2>0</Z2>
+        </Lines>
+        <Lines>
+          <sys_coord>false</sys_coord>
+          <p1>false</p1>
+          <p2>false</p2>
+          <p3>false</p3>
+          <dX>0</dX>
+          <dY>0</dY>
+          <xm>66.5</xm>
+          <ym>-22</ym>
+          <X1>1166.5</X1>
+          <X2>1299.5</X2>
+          <Y1>670</Y1>
+          <Y2>626</Y2>
+          <Z1>0</Z1>
+          <Z2>0</Z2>
+        </Lines>
+        <Lines>
+          <sys_coord>false</sys_coord>
+          <p1>false</p1>
+          <p2>false</p2>
+          <p3>false</p3>
+          <dX>0</dX>
+          <dY>0</dY>
+          <xm>72</xm>
+          <ym>-56.5</ym>
+          <X1>1106</X1>
+          <X2>1250</X2>
+          <Y1>622.5</Y1>
+          <Y2>509.5</Y2>
           <Z1>0</Z1>
           <Z2>0</Z2>
         </Lines>
@@ -61,6 +163,7 @@
   </Mas_group_lines>
   <groups_name>
     <string>num: 1</string>
+    <string>num: 2</string>
   </groups_name>
-  <view_group>0</view_group>
+  <view_group>1</view_group>
 </Group_mas_lines>
