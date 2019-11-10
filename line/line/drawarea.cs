@@ -352,8 +352,10 @@ namespace line
 
         private void Open_button_Click(object sender, EventArgs e)
         {
-
-            string file = "filepath";
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel) // если отмена
+                return;
+            string file = openFileDialog1.FileName; // полный путь к файлу
+            //string file = "filepath";
             XmlSerializer formatter = new XmlSerializer(groups.GetType());
             FileStream aFile = new FileStream(file, FileMode.Open);
             byte[] buffer = new byte[aFile.Length];
@@ -366,7 +368,9 @@ namespace line
 
         private void save_button_Click(object sender, EventArgs e)
         {
-            string path = "filepath";
+            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            string path = saveFileDialog1.FileName;
             FileStream outFile = File.Create(path);
             XmlSerializer formatter = new XmlSerializer(groups.GetType());
             formatter.Serialize(outFile, groups);

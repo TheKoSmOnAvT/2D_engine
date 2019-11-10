@@ -75,6 +75,8 @@
             this.Open_button = new System.Windows.Forms.Button();
             this.save_button = new System.Windows.Forms.Button();
             this.Morfing_button = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -674,6 +676,10 @@
             this.Morfing_button.UseVisualStyleBackColor = true;
             this.Morfing_button.Click += new System.EventHandler(this.Morfing_button_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // drawarea
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -789,6 +795,8 @@
         private System.Windows.Forms.Button Open_button;
         private System.Windows.Forms.Button save_button;
         private System.Windows.Forms.Button Morfing_button;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
