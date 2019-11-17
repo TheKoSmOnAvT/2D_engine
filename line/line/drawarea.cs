@@ -37,7 +37,7 @@ namespace line
 
         }
 
-        private void Canvas_MouseDown(object sender, MouseEventArgs e)
+        private void Canvas_MouseDown(object sender, MouseEventArgs e)//!!!
         {
             figures.Canvas_MouseDown(sender, e);
             try
@@ -59,11 +59,10 @@ namespace line
         {
 
             figures.Canvas_MouseMove(sender, e);
-            try
+            if(groups.view_group!=-1)
             {
                 groups.Mas_group_lines[groups.view_group].Canvas_MouseMove(sender, e);
             }
-            catch { }
             LineofEq.Text = figures.toString();
             coords();
             Canvas.Invalidate();
