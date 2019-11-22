@@ -386,5 +386,18 @@ namespace line
             Morfing window = new Morfing(groups);
             window.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            figures.AddCube();
+            Canvas.Invalidate();
+        }
+
+        private void allgreen_Click(object sender, EventArgs e)
+        {
+            figures.AllGreen();
+            figures.NumOfLine = 0;
+            Canvas.Invalidate();
+        }
     }
 }

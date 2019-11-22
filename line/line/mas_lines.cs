@@ -119,12 +119,20 @@ namespace line
             Stack<int> nums = new Stack<int>();
             for (int i = 0; i < ln_mas.Count; i++)
             {
-                if (ln_mas[i].what_pen() == GR)
+                if (ln_mas[i].what_pen_1())
                 {
                     nums.Push(i);
                 }
             }
             return nums;
+        }
+
+        public void AllGreen()
+        {
+            for (int i = 0; i < ln_mas.Count; i++)
+            {
+                ln_mas[i].Pen_green_new(GR);
+            }
         }
 
         public void Canvas_MouseDown(object sender, MouseEventArgs e)
@@ -206,10 +214,25 @@ namespace line
         {
             ln_mas.Add(new Lines(rnd.Next(50, 300), rnd.Next(80, 350), rnd.Next(50, 400), rnd.Next(10, 200)));
         }
-
         public void Add(float x, float y, float xx, float yy)
         {
-            ln_mas.Add(new Lines(x, y, xx,  yy));
+            ln_mas.Add(new Lines(x,y,xx,yy));
+        }
+
+        public void AddCube()
+        {
+            ln_mas.Add(new Lines(0,100,0,200,100,0));//AB
+            ln_mas.Add(new Lines(0, 100, 0,0,0,0));//AD
+            ln_mas.Add(new Lines(0,0,0,200,0,0));//DC
+            ln_mas.Add(new Lines(200,0,0,200,100,0));//CB
+            ln_mas.Add(new Lines(200,0,0,200,0,100));//CC1
+            ln_mas.Add(new Lines(200,100,0,200,100,100));//BB1
+            ln_mas.Add(new Lines(0,100,0,0,100,100));//AA1
+            ln_mas.Add(new Lines(0,0,0,0,0,100));//DD1
+            ln_mas.Add(new Lines(0,100,100,200,100,100));//A1B1
+            ln_mas.Add(new Lines(200,100,100,200,0,100));//B1C1
+            ln_mas.Add(new Lines(0,0,100,200,0,100));//D1C1
+            ln_mas.Add(new Lines(0,100,100,0,0,100));//A1D1
         }
 
         public void del_lines() //удаление линий

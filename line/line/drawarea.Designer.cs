@@ -53,7 +53,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.button_poject = new System.Windows.Forms.Button();
             this.button_area = new System.Windows.Forms.Button();
-            this.local = new System.Windows.Forms.CheckBox();
             this.text_move_z = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -77,6 +76,8 @@
             this.Morfing_button = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button2 = new System.Windows.Forms.Button();
+            this.allgreen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -402,18 +403,6 @@
             this.button_area.UseVisualStyleBackColor = true;
             this.button_area.Click += new System.EventHandler(this.Button_area_Click);
             // 
-            // local
-            // 
-            this.local.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.local.AutoSize = true;
-            this.local.Location = new System.Drawing.Point(1063, 26);
-            this.local.Name = "local";
-            this.local.Size = new System.Drawing.Size(48, 17);
-            this.local.TabIndex = 31;
-            this.local.Text = "local";
-            this.local.UseVisualStyleBackColor = true;
-            // 
             // text_move_z
             // 
             this.text_move_z.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -680,12 +669,40 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(1163, 467);
+            this.button2.MaximumSize = new System.Drawing.Size(75, 23);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 53;
+            this.button2.Text = "Cube";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // allgreen
+            // 
+            this.allgreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.allgreen.Location = new System.Drawing.Point(1163, 496);
+            this.allgreen.MaximumSize = new System.Drawing.Size(75, 23);
+            this.allgreen.Name = "allgreen";
+            this.allgreen.Size = new System.Drawing.Size(75, 23);
+            this.allgreen.TabIndex = 54;
+            this.allgreen.Text = "Focus";
+            this.allgreen.UseVisualStyleBackColor = true;
+            this.allgreen.Click += new System.EventHandler(this.allgreen_Click);
+            // 
             // drawarea
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1264, 641);
+            this.Controls.Add(this.allgreen);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.Morfing_button);
             this.Controls.Add(this.save_button);
             this.Controls.Add(this.Open_button);
@@ -707,7 +724,6 @@
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.text_move_z);
-            this.Controls.Add(this.local);
             this.Controls.Add(this.button_area);
             this.Controls.Add(this.text_project_p);
             this.Controls.Add(this.text_project_q);
@@ -773,7 +789,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button_poject;
         private System.Windows.Forms.Button button_area;
-        private System.Windows.Forms.CheckBox local;
         private System.Windows.Forms.TextBox text_move_z;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
@@ -797,6 +812,8 @@
         private System.Windows.Forms.Button Morfing_button;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button allgreen;
     }
 }
 

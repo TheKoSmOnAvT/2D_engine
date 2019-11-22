@@ -18,8 +18,8 @@ namespace line
         private float y1;
         private float x2;
         private float y2;
-        private float z1;
-        private float z2;
+        private float z1=0;
+        private float z2=0;
 
         public bool sys_coord = false; //false-global, true-local
         public bool p1 = false; //работа с краями или центром линии
@@ -27,6 +27,7 @@ namespace line
         public bool p3 = false;
 
         protected Pen pen = new Pen(Color.Black, 3);
+        protected bool ch = false;
 
         public float dX = 0; //дельта переменные
         public float dY = 0;
@@ -159,6 +160,8 @@ namespace line
             Y1 = Y;
             X2 = XX;
             Y2 = YY;
+            z1 = z2 = 0;
+            todraw();
         }
 
         public Lines(float X, float Y, float Z, float XX, float YY, float ZZ)
@@ -169,12 +172,20 @@ namespace line
             Y2 = YY;
             Z1 = Z;
             Z2 = ZZ;
+            todraw();
         }
 
         public void Pen_green()
         {
             pen = new Pen(Color.SeaGreen, 3);
         }
+        
+        public void Pen_green_new(Pen GR)
+        {
+            pen = GR;
+            ch = true;
+        }
+
         public void Pen_black()
         {
             pen = new Pen(Color.Black, 3);
@@ -183,6 +194,11 @@ namespace line
         {
             return pen;
         }
+        public bool what_pen_1()
+        {
+            return ch;
+        }
+
         public float X1
         {
             set
@@ -362,8 +378,6 @@ namespace line
         public void Button_move(float x, float y, float z)
         {
             unddraw();
-            float z1 = 1 + z;
-            //if (z == 0){ z1 = 1; }
             form_matrix();
             matrix_move[3,0]= x;
             matrix_move[3,1] =y;
